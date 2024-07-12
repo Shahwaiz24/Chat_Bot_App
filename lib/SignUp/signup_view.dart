@@ -13,23 +13,44 @@ class SignupView extends StatefulWidget {
 class _SignupViewState extends State<SignupView> {
   @override
   Widget build(BuildContext context) {
+    // Get Size
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return ViewModelBuilder.reactive(
-        viewModelBuilder: () => SignupViewmodel(),
-        builder: (context, viewModel, child) {
-          return Scaffold(
-            backgroundColor: Utils.backgroundColor,
-            body: Stack(
-              children: [
-                Positioned.fill(
-                    child: Image(
+      viewModelBuilder: () => SignupViewmodel(),
+      builder: (context, viewModel, child) {
+        return Scaffold(
+          backgroundColor: Utils.backgroundColor,
+          body: Stack(
+            children: [
+              Container(
+                height: screenHeight,
+                width: screenWidth,
+                child: Image(
                   image: AssetImage('assets/images/background_2.png'),
                   fit: BoxFit.cover,
-                )),
-                // This is The Main Column //
-                Column(),
-              ],
-            ),
-          );
-        });
+                ),
+              ),
+              Column(
+                children: [
+                  SizedBox(
+                      height: screenHeight *
+                          0.050), // Add some padding from the top if needed
+                  Padding(
+                    padding: EdgeInsets.only(left: screenWidth * 0.040),
+                    child: Icon(
+                      Icons.arrow_back_outlined,
+                      size: screenHeight * 0.035,
+                      color: Utils.TextColor,
+                    ),
+                  ),
+                  
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
