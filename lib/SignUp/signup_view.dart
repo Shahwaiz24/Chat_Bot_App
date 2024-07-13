@@ -1,3 +1,5 @@
+import 'package:chat_bot/Custom%20Widget/button.dart';
+import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/SignUp/signup_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -69,6 +71,47 @@ class _SignupViewState extends State<SignupView> {
                         Utils.Pink.withOpacity(0.4)
                       ],
                     ),
+                  ),
+                  child: Column(
+                    children: [
+                      SizedBox(
+                        height: screenHeight * 0.120,
+                      ),
+                      Text(
+                        'Add your Phone number',
+                        style: TextStyle(
+                            color: Utils.TextColor,
+                            fontSize: screenHeight * 0.020),
+                      ),
+                      SizedBox(
+                        height: screenHeight * 0.100,
+                      ),
+                      Padding(
+                          padding: EdgeInsets.only(
+                              left: screenWidth * 0.070,
+                              right: screenWidth * 0.070),
+                          child: Textfield(
+                            backColor: Utils.Purple,
+                            hintColor: Utils.TextColor,
+                            hintText: 'Enter your phone number',
+                            screenHeight: screenHeight,
+                            screenWidth: screenWidth,
+                          )),
+                      SizedBox(
+                        height: screenHeight * 0.040,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            left: screenWidth * 0.180,
+                            right: screenWidth * 0.180),
+                        child: Button(
+                          text: 'Send Code',
+                          ontap: () {},
+                          screenHeight: screenHeight,
+                          screenWidth: screenWidth,
+                        ),
+                      )
+                    ],
                   ),
                 ),
               ),
