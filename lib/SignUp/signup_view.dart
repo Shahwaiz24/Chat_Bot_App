@@ -47,46 +47,41 @@ class _SignupViewState extends State<SignupView> {
                     ],
                   ),
                   Spacer(),
-                  ClipRRect(
-                    clipBehavior: Clip.antiAlias,
-                    borderRadius: BorderRadius.circular(
-                        0), // or any other radius you want
-                    child: Stack(
-                      
-                      children: [
-                        // Your gradient container
-                        Container(
-                          height: screenHeight * 0.500,
-                          width: screenWidth,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(screenWidth * 0.32),
-                              topRight: Radius.circular(screenWidth * 0.32),
-                            ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Utils.Purple.withOpacity(0.4),
-                                Utils.Pink.withOpacity(0.4)
-                              ],
-                            ),
+                  Stack(
+                    
+                    children: [
+                      // Your gradient container
+                      Container(
+                        height: screenHeight * 0.500,
+                        width: screenWidth,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(screenWidth * 0.32),
+                            topRight: Radius.circular(screenWidth * 0.32),
+                          ),
+                          gradient: LinearGradient(
+                            begin: Alignment.topCenter,
+                            end: Alignment.bottomCenter,
+                            colors: [
+                              Utils.Purple.withOpacity(0.4),
+                              Utils.Pink.withOpacity(0.4)
+                            ],
                           ),
                         ),
-                        // Your positioned image
-                        Positioned(
-                          top: -screenHeight * 0.040,
-                          child: Container(
-                            height: screenHeight * 0.070,
-                            width: screenWidth * 0.250,
-                            child: Image(
-                              image: AssetImage('assets/images/animIcon.png'),
-                              fit: BoxFit.cover,
-                            ),
+                      ),
+                      // Your positioned image
+                      Positioned(
+                        top: -screenHeight * 0.040,
+                        child: Container(
+                          height: screenHeight * 0.070,
+                          width: screenWidth * 0.250,
+                          child: Image(
+                            image: AssetImage('assets/images/animIcon.png'),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   )
                 ],
               ),
