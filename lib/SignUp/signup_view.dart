@@ -32,59 +32,58 @@ class _SignupViewState extends State<SignupView> {
                   fit: BoxFit.cover,
                 ),
               ),
-              Column(
-                children: [
-                  SizedBox(height: screenHeight * 0.050),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(width: screenWidth * 0.05),
-                      Icon(
+              Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.045),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(width: screenWidth * 0.05),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
                         Icons.arrow_back_outlined,
-                        size: screenHeight * 0.035,
+                        size: screenHeight * 0.040,
                         color: Utils.TextColor,
                       ),
-                    ],
-                  ),
-                  Spacer(),
-                  Stack(
-                    
-                    children: [
-                      // Your gradient container
-                      Container(
-                        height: screenHeight * 0.500,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(screenWidth * 0.32),
-                            topRight: Radius.circular(screenWidth * 0.32),
-                          ),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Utils.Purple.withOpacity(0.4),
-                              Utils.Pink.withOpacity(0.4)
-                            ],
-                          ),
-                        ),
-                      ),
-                      // Your positioned image
-                      Positioned(
-                        top: -screenHeight * 0.040,
-                        child: Container(
-                          height: screenHeight * 0.070,
-                          width: screenWidth * 0.250,
-                          child: Image(
-                            image: AssetImage('assets/images/animIcon.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                ],
+                    ),
+                  ],
+                ),
               ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: screenHeight * 0.500,
+                  width: screenWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(screenWidth * 0.32),
+                      topRight: Radius.circular(screenWidth * 0.32),
+                    ),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Utils.Purple.withOpacity(0.4),
+                        Utils.Pink.withOpacity(0.4)
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: screenHeight * 0.400,
+                left: screenWidth * 0.355,
+                child: Container(
+                  height: screenHeight * 0.220,
+                  width: screenWidth * 0.260,
+                  child: const Image(
+                    image: AssetImage('assets/images/animIcon.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
             ],
           ),
         );
