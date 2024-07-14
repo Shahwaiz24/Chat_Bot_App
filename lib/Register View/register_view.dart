@@ -1,8 +1,10 @@
 import 'package:chat_bot/Custom%20Widget/button.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
+import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Register%20View/register_viewmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 class RegisterView extends StatefulWidget {
@@ -23,6 +25,7 @@ class _RegisterViewState extends State<RegisterView> {
       viewModelBuilder: () => RegisterViewmodel(),
       builder: (context, viewModel, child) {
         return Scaffold(
+          resizeToAvoidBottomInset: false,
           backgroundColor: Utils.backgroundColor,
           body: Stack(
             children: [
@@ -72,46 +75,55 @@ class _RegisterViewState extends State<RegisterView> {
                       ],
                     ),
                   ),
-                  child: Column(
-                    children: [
-                      SizedBox(
-                        height: screenHeight * 0.120,
-                      ),
-                      Text(
-                        'Add your Phone number',
-                        style: TextStyle(
-                            color: Utils.TextColor,
-                            fontSize: screenHeight * 0.020),
-                      ),
-                      SizedBox(
-                        height: screenHeight * 0.100,
-                      ),
-                      Padding(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        SizedBox(
+                          height: screenHeight * 0.120,
+                        ),
+                        Text(
+                          'Add your Phone number',
+                          style: TextStyle(
+                              color: Utils.TextColor,
+                              fontSize: screenHeight * 0.020),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.100,
+                        ),
+                        Padding(
+                            padding: EdgeInsets.only(
+                                left: screenWidth * 0.070,
+                                right: screenWidth * 0.070),
+                            child: Textfield(
+                              false,
+                              backColor: Utils.Purple,
+                              hintColor: Utils.TextColor,
+                              hintText: 'Enter your phone number',
+                              screenHeight: screenHeight,
+                              screenWidth: screenWidth,
+                            )),
+                        SizedBox(
+                          height: screenHeight * 0.040,
+                        ),
+                        Padding(
                           padding: EdgeInsets.only(
-                              left: screenWidth * 0.070,
-                              right: screenWidth * 0.070),
-                          child: Textfield(
-                            backColor: Utils.Purple,
-                            hintColor: Utils.TextColor,
-                            hintText: 'Enter your phone number',
+                              left: screenWidth * 0.180,
+                              right: screenWidth * 0.180),
+                          child: Button(
+                            text: 'Send Code',
+                            ontap: () {
+                              Navigator.push(
+                                  context,
+                                  PageTransition(
+                                      type: PageTransitionType.bottomToTop,
+                                      child: GetOtpView()));
+                            },
                             screenHeight: screenHeight,
                             screenWidth: screenWidth,
-                          )),
-                      SizedBox(
-                        height: screenHeight * 0.040,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(
-                            left: screenWidth * 0.180,
-                            right: screenWidth * 0.180),
-                        child: Button(
-                          text: 'Send Code',
-                          ontap: () {},
-                          screenHeight: screenHeight,
-                          screenWidth: screenWidth,
-                        ),
-                      )
-                    ],
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
               ),
