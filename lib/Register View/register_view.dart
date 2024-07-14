@@ -97,7 +97,6 @@ class _RegisterViewState extends State<RegisterView> {
                                 left: screenWidth * 0.070,
                                 right: screenWidth * 0.070),
                             child: Textfield(
-
                               false,
                               backColor: Utils.Purple,
                               Controller: PhoneNumberController,
@@ -115,12 +114,11 @@ class _RegisterViewState extends State<RegisterView> {
                               right: screenWidth * 0.180),
                           child: Button(
                             text: 'Send Code',
-                            ontap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.bottomToTop,
-                                      child: GetOtpView()));
+                            ontap: () async {
+                              await viewModel.OtpSent(
+                                  PhoneNumber: OtpController.text,
+                                  context: context,
+                                  view: GetOtpView);
                             },
                             screenHeight: screenHeight,
                             screenWidth: screenWidth,

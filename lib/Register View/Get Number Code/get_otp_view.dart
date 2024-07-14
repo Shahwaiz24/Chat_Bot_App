@@ -94,6 +94,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                             text: 'Send Code',
                             ontap: () {
                               print('OTP: ${OtpController.text}');
+                              
                               OtpController.clear();
                             },
                             screenHeight: screenHeight,
