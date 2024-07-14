@@ -1,9 +1,10 @@
 // ignore_for_file: unused_local_variable
 
 import 'package:chat_bot/Services/utils.dart';
-import 'package:chat_bot/SignUp/signup_view.dart';
+import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:chat_bot/Splash%20View/starting_viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 class StartingView extends StatelessWidget {
@@ -83,8 +84,9 @@ class StartingView extends StatelessWidget {
                       onTap: () {
                         Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => const SignupView()));
+                            PageTransition(
+                                type: PageTransitionType.bottomToTop,
+                                child: const RegisterView()));
                       },
                       child: Container(
                         height: screenHeight * 0.250,

@@ -11,7 +11,7 @@ class Button extends StatefulWidget {
 
   final double screenHeight;
   final String text;
-  final ontap;
+  final  ontap;
   final double screenWidth;
   @override
   State<Button> createState() => _ButtonState();

@@ -1,18 +1,18 @@
 import 'package:chat_bot/Custom%20Widget/button.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Services/utils.dart';
-import 'package:chat_bot/SignUp/signup_viewmodel.dart';
+import 'package:chat_bot/Register%20View/register_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-class SignupView extends StatefulWidget {
-  const SignupView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<SignupView> createState() => _SignupViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _SignupViewState extends State<SignupView> {
+class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     // Get Size
@@ -20,7 +20,7 @@ class _SignupViewState extends State<SignupView> {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return ViewModelBuilder.reactive(
-      viewModelBuilder: () => SignupViewmodel(),
+      viewModelBuilder: () => RegisterViewmodel(),
       builder: (context, viewModel, child) {
         return Scaffold(
           backgroundColor: Utils.backgroundColor,
