@@ -5,6 +5,7 @@ class Textfield extends StatefulWidget {
   const Textfield(this.isObsecure,
       {super.key,
       required this.screenHeight,
+      required this.Controller,
       required this.screenWidth,
       required this.hintText,
       required this.backColor,
@@ -16,6 +17,7 @@ class Textfield extends StatefulWidget {
   final Color hintColor;
   final Color backColor;
   final bool isObsecure;
+  final TextEditingController Controller;
 
   @override
   State<Textfield> createState() => _TextfieldState();
@@ -25,12 +27,13 @@ class _TextfieldState extends State<Textfield> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      controller: widget.Controller,
       keyboardType: TextInputType.number,
       style: TextStyle(color: widget.hintColor),
       obscureText: widget.isObsecure == true ? true : false,
       obscuringCharacter: '*',
       decoration: InputDecoration(
-        hintText: 'Enter your phone Number',
+        hintText: widget.hintText,
         fillColor: widget.backColor.withOpacity(0.2),
         filled: true,
         contentPadding: EdgeInsets.only(

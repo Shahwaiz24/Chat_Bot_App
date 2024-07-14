@@ -14,6 +14,8 @@ class RegisterView extends StatefulWidget {
   State<RegisterView> createState() => _RegisterViewState();
 }
 
+TextEditingController PhoneNumberController = TextEditingController();
+
 class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
@@ -95,8 +97,10 @@ class _RegisterViewState extends State<RegisterView> {
                                 left: screenWidth * 0.070,
                                 right: screenWidth * 0.070),
                             child: Textfield(
+
                               false,
                               backColor: Utils.Purple,
+                              Controller: PhoneNumberController,
                               hintColor: Utils.TextColor,
                               hintText: 'Enter your phone number',
                               screenHeight: screenHeight,

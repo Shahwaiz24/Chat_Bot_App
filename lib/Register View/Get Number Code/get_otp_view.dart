@@ -13,6 +13,8 @@ class GetOtpView extends StatefulWidget {
   State<GetOtpView> createState() => _GetOtpViewState();
 }
 
+TextEditingController OtpController = TextEditingController();
+
 class _GetOtpViewState extends State<GetOtpView> {
   @override
   Widget build(BuildContext context) {
@@ -23,6 +25,7 @@ class _GetOtpViewState extends State<GetOtpView> {
         viewModelBuilder: () => GetOtpViewmodel(),
         builder: (context, viewmodel, child) {
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Utils.backgroundColor,
             body: Stack(
               children: [
@@ -74,6 +77,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                             child: Textfield(
                               true,
                               backColor: Utils.Purple,
+                              Controller: OtpController,
                               hintColor: Utils.TextColor,
                               hintText: 'Verification Code',
                               screenHeight: screenHeight,
@@ -89,11 +93,8 @@ class _GetOtpViewState extends State<GetOtpView> {
                           child: Button(
                             text: 'Send Code',
                             ontap: () {
-                              Navigator.push(
-                                  context,
-                                  PageTransition(
-                                      type: PageTransitionType.bottomToTop,
-                                      child: GetOtpView()));
+                              print('OTP: ${OtpController.text}');
+                              OtpController.clear();
                             },
                             screenHeight: screenHeight,
                             screenWidth: screenWidth,
