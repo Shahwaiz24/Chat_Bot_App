@@ -1,3 +1,4 @@
+import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
@@ -9,7 +10,7 @@ class RegisterViewmodel extends BaseViewModel {
   }
 
   OtpSent(
-      {required String PhoneNumber, required context, required view}) async {
+      {required String PhoneNumber, required context}) async {
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         verificationCompleted: (PhoneAuthCredential PhoneAuthCredential) {
@@ -20,10 +21,12 @@ class RegisterViewmodel extends BaseViewModel {
         },
         codeSent: (String verificationid, int? token) {
           print('PhoneNumber: ${PhoneNumber}');
-          Navigator.push(
+          Navigator.pushReplacement(
               context,
               PageTransition(
-                  type: PageTransitionType.bottomToTop, child: view()));
+                  child: GetOtpView(verificationId: verificationid,),
+                  type: PageTransitionType.bottomToTop,
+                  duration: Duration(seconds: 2)));
         },
         codeAutoRetrievalTimeout: (String verificationid) {},
         phoneNumber: PhoneNumber,
@@ -32,5 +35,6 @@ class RegisterViewmodel extends BaseViewModel {
       print("Execption: ${e.toString()}");
       return false;
     }
+    
   }
 }

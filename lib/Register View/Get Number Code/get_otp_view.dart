@@ -7,11 +7,14 @@ import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 class GetOtpView extends StatefulWidget {
-  const GetOtpView({super.key});
+  const GetOtpView({super.key, required this.verificationId});
+
+final String verificationId;
 
   @override
   State<GetOtpView> createState() => _GetOtpViewState();
 }
+
 
 TextEditingController OtpController = TextEditingController();
 
@@ -62,7 +65,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                           height: screenHeight * 0.120,
                         ),
                         Text(
-                          'Enter Verification Code',
+                          'Verification Code Recieved',
                           style: TextStyle(
                               color: Utils.TextColor,
                               fontSize: screenHeight * 0.020),
@@ -79,7 +82,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                               backColor: Utils.Purple,
                               Controller: OtpController,
                               hintColor: Utils.TextColor,
-                              hintText: 'Verification Code',
+                              hintText: 'Verification Code ',
                               screenHeight: screenHeight,
                               screenWidth: screenWidth,
                             )),
@@ -91,7 +94,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                               left: screenWidth * 0.180,
                               right: screenWidth * 0.180),
                           child: Button(
-                            text: 'Send Code',
+                            text: 'Verify',
                             ontap: () {
                               print('OTP: ${OtpController.text}');
                               

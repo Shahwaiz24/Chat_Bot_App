@@ -167,22 +167,15 @@ class _RegisterViewState extends State<RegisterView> {
                                   isSentOtp = true;
                                   viewModel.stateRebuild();
                                   bool credential = await viewModel.OtpSent(
-                                      PhoneNumber: PhoneNumberController.text,
-                                      context: context,
-                                      view: GetOtpView);
+                                    PhoneNumber: PhoneNumberController.text,
+                                    context: context,
+                                  );
                                   isSentOtp = false;
                                   viewModel.stateRebuild();
 
                                   if (credential == false) {
                                     isError = true;
                                     viewModel.stateRebuild();
-                                  } else {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                            child: GetOtpView(),
-                                            type: PageTransitionType
-                                                .bottomToTop, duration: Duration(seconds: 2)));
                                   }
                                 },
                                 screenHeight: screenHeight,
