@@ -8,6 +8,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 bool isSentOtp = false;
+bool isError = false;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -97,58 +98,98 @@ class _RegisterViewState extends State<RegisterView> {
                             ],
                           ),
                         ),
-                        child: SingleChildScrollView(
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: screenHeight * 0.120,
-                              ),
-                              Text(
-                                'Add your Phone number',
-                                style: TextStyle(
-                                    color: Utils.TextColor,
-                                    fontSize: screenHeight * 0.020),
-                              ),
-                              SizedBox(
-                                height: screenHeight * 0.100,
-                              ),
-                              Padding(
-                                  padding: EdgeInsets.only(
-                                      left: screenWidth * 0.070,
-                                      right: screenWidth * 0.070),
-                                  child: Textfield(
-                                    false,
-                                    backColor: Utils.Purple,
-                                    Controller: PhoneNumberController,
-                                    hintColor: Utils.TextColor,
-                                    hintText: 'Enter your phone number',
-                                    screenHeight: screenHeight,
-                                    screenWidth: screenWidth,
-                                  )),
-                              SizedBox(
-                                height: screenHeight * 0.040,
-                              ),
-                              Padding(
+                        child: Column(
+                          children: [
+                            SizedBox(
+                              height: screenHeight * 0.120,
+                            ),
+                            Text(
+                              'Add your Phone number',
+                              style: TextStyle(
+                                  color: Utils.TextColor,
+                                  fontSize: screenHeight * 0.020),
+                            ),
+                            SizedBox(
+                              height: screenHeight * 0.100,
+                            ),
+                            Padding(
                                 padding: EdgeInsets.only(
-                                    left: screenWidth * 0.180,
-                                    right: screenWidth * 0.180),
-                                child: Button(
-                                  text: 'Send Code',
-                                  ontap: () async {
-                                    
-                                    bool credential = await viewModel.OtpSent(
-                                        PhoneNumber: PhoneNumberController.text,
-                                        context: context,
-                                        view: GetOtpView);
-                                    if (credential == false) {
-                                    } else {}
-                                  },
+                                    left: screenWidth * 0.070,
+                                    right: screenWidth * 0.070),
+                                child: Textfield(
+                                  false,
+                                  backColor: Utils.Purple,
+                                  Controller: PhoneNumberController,
+                                  hintColor: Utils.TextColor,
+                                  hintText: 'Enter your phone number',
                                   screenHeight: screenHeight,
                                   screenWidth: screenWidth,
-                                ),
-                              )
-                            ],
-                          ),
+                                )),
+                            isError == true
+                                ? Column(
+                                    children: [
+                                      SizedBox(
+                                        height: screenHeight * 0.010,
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: screenWidth * 0.030),
+                                        child: Row(
+                                          children: [
+                                            Icon(
+                                              Icons.error_outline_rounded,
+                                              size: screenHeight * 0.020,
+                                              color: Colors.red,
+                                            ),
+                                            SizedBox(
+                                              width: screenWidth * 0.010,
+                                            ),
+                                            Text('Enter a valid Number',
+                                                style: TextStyle(
+                                                    color: Utils.TextColor,
+                                                    fontSize:
+                                                        screenHeight * 0.023)),
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  )
+                                : SizedBox(
+                                    height: screenHeight * 0.040,
+                                  ),
+                            Padding(
+                              padding: EdgeInsets.only(
+                                  left: screenWidth * 0.180,
+                                  right: screenWidth * 0.180),
+                              child: Button(
+                                text: 'Send Code',
+                                ontap: () async {
+                                  isSentOtp = true;
+                                  viewModel.stateRebuild();
+                                  bool credential = await viewModel.OtpSent(
+                                      PhoneNumber: PhoneNumberController.text,
+                                      context: context,
+                                      view: GetOtpView);
+                                  isSentOtp = false;
+                                  viewModel.stateRebuild();
+
+                                  if (credential == false) {
+                                    isError = true;
+                                    viewModel.stateRebuild();
+                                  } else {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            child: GetOtpView(),
+                                            type: PageTransitionType
+                                                .bottomToTop, duration: Duration(seconds: 2)));
+                                  }
+                                },
+                                screenHeight: screenHeight,
+                                screenWidth: screenWidth,
+                              ),
+                            )
+                          ],
                         ),
                       ),
                     ),

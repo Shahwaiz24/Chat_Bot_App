@@ -86,7 +86,8 @@ class StartingView extends StatelessWidget {
                             context,
                             PageTransition(
                                 type: PageTransitionType.bottomToTop,
-                                child: const RegisterView()));
+                                child: const RegisterView(),
+                                duration: Duration(seconds: 2)));
                       },
                       child: Container(
                         height: screenHeight * 0.250,

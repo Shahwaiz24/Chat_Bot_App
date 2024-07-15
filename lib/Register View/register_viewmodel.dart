@@ -1,11 +1,12 @@
-import 'package:chat_bot/Services/otp_service.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
 
 class RegisterViewmodel extends BaseViewModel {
-  stateRebuild({required bool isSenting}) {}
+  stateRebuild() {
+    rebuildUi();
+  }
 
   OtpSent(
       {required String PhoneNumber, required context, required view}) async {
