@@ -116,7 +116,7 @@ class _RegisterViewState extends State<RegisterView> {
                             text: 'Send Code',
                             ontap: () async {
                               await viewModel.OtpSent(
-                                  PhoneNumber: OtpController.text,
+                                  PhoneNumber: PhoneNumberController.text,
                                   context: context,
                                   view: GetOtpView);
                             },

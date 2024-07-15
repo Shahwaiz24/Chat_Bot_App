@@ -15,6 +15,7 @@ class RegisterViewmodel extends BaseViewModel {
           print(exception.toString());
         },
         codeSent: (String verificationid, int? token) {
+          print('PhoneNumber: ${PhoneNumber}');
           Navigator.push(
               context,
               PageTransition(
