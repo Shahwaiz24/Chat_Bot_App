@@ -121,12 +121,12 @@ class _RegisterViewState extends State<RegisterView> {
                                       ),
                                       Padding(
                                         padding: EdgeInsets.only(
-                                            left: screenWidth * 0.030),
+                                            left: screenWidth * 0.070),
                                         child: Row(
                                           children: [
                                             Icon(
                                               Icons.error_outline_rounded,
-                                              size: screenHeight * 0.020,
+                                              size: screenHeight * 0.030,
                                               color: Colors.red,
                                             ),
                                             SizedBox(
@@ -136,10 +136,13 @@ class _RegisterViewState extends State<RegisterView> {
                                                 style: TextStyle(
                                                     color: Utils.TextColor,
                                                     fontSize:
-                                                        screenHeight * 0.023)),
+                                                        screenHeight * 0.020)),
                                           ],
                                         ),
                                       ),
+                                      SizedBox(
+                                        height: screenHeight * 0.020,
+                                      )
                                     ],
                                   )
                                 : SizedBox(
@@ -154,14 +157,15 @@ class _RegisterViewState extends State<RegisterView> {
                                 ontap: () async {
                                   isSentOtp = true;
                                   viewModel.stateRebuild();
-                                  dynamic credential = await viewModel.OtpSent(
+                                  Map<String, dynamic> credential =
+                                      await viewModel.OtpSent(
                                     phoneNumber: PhoneNumberController.text,
-                                    
                                   );
                                   isSentOtp = false;
                                   viewModel.stateRebuild();
 
-                                  if (credential.runtimeType == Map) {
+                                  if (credential['CodeSent'] == true &&
+                                      credential['verificationId'] != null) {
                                     Navigator.pushReplacement(
                                         context,
                                         PageTransition(
@@ -171,9 +175,11 @@ class _RegisterViewState extends State<RegisterView> {
                                             type:
                                                 PageTransitionType.bottomToTop,
                                             duration: Duration(seconds: 2)));
+                                    PhoneNumberController.clear();
                                   } else {
                                     isError = true;
                                     viewModel.stateRebuild();
+                                    PhoneNumberController.clear();
                                   }
                                 },
                                 screenHeight: screenHeight,

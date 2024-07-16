@@ -88,6 +88,7 @@ class StartingView extends StatelessWidget {
                                 type: PageTransitionType.bottomToTop,
                                 child: const RegisterView(),
                                 duration: Duration(seconds: 2)));
+                        PhoneNumberController.clear();
                       },
                       child: Container(
                         height: screenHeight * 0.250,

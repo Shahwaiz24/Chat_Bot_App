@@ -6,12 +6,11 @@ class RegisterViewmodel extends BaseViewModel {
     rebuildUi();
   }
 
-  Future OtpSent({
+  Future<Map<String, dynamic>> OtpSent({
     required String phoneNumber,
-    
   }) async {
-    bool isCodeSent = false;
-    String? Verificationid;
+    String? verificationId;
+    print(phoneNumber);
 
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
@@ -23,27 +22,34 @@ class RegisterViewmodel extends BaseViewModel {
         },
         codeSent: (String verificationId, int? token) {
           print('PhoneNumber: $phoneNumber');
-
-          isCodeSent = true;
-          Verificationid = verificationId; // Set isCodeSent to true
+          // Set verificationId here
+          verificationId = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
-        phoneNumber: phoneNumber,
+        phoneNumber: "+92 ${phoneNumber}",
       );
+
+      // Wait for the codeSent callback to complete
+      await Future.delayed(Duration(seconds: 2)); // adjust the delay as needed
+
+      if (verificationId != null) {
+        return <String, dynamic>{
+          // Use <String, dynamic> instead of {}
+          'CodeSent': true,
+          'verificationId': verificationId
+        };
+      } else {
+        return <String, dynamic>{
+          // Use <String, dynamic> instead of {}
+          'CodeSent': false
+        };
+      }
     } on Exception catch (e) {
       print("Exception: ${e.toString()}");
-    }
-
-    if (isCodeSent == true && Verificationid != null) {
-      Map verificationCheck = {
-        'CodeSent': isCodeSent,
-        'verificationId': Verificationid
+      return <String, dynamic>{
+        // Use <String, dynamic> instead of {}
+        'CodeSent': false
       };
-      return verificationCheck;
-    } else {
-      return isCodeSent;
     }
-
-    // Return the value of isCodeSent
   }
 }
