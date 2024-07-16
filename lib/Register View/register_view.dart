@@ -33,54 +33,60 @@ class _RegisterViewState extends State<RegisterView> {
           resizeToAvoidBottomInset: false,
           backgroundColor: Utils.backgroundColor,
           body: Stack(
+            children: [
+              Container(
+                height: screenHeight,
+                width: screenWidth,
+                child: const Image(
+                  image: AssetImage('assets/images/background_2.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: screenHeight * 0.045),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      height: screenHeight,
-                      width: screenWidth,
-                      child: const Image(
-                        image: AssetImage('assets/images/background_2.png'),
-                        fit: BoxFit.cover,
+                    SizedBox(width: screenWidth * 0.05),
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(
+                        Icons.arrow_back_outlined,
+                        size: screenHeight * 0.040,
+                        color: Utils.TextColor,
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: screenHeight * 0.045),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          SizedBox(width: screenWidth * 0.05),
-                          InkWell(
-                            onTap: () {
-                              Navigator.pop(context);
-                            },
-                            child: Icon(
-                              Icons.arrow_back_outlined,
-                              size: screenHeight * 0.040,
-                              color: Utils.TextColor,
-                            ),
-                          ),
-                        ],
-                      ),
+                  ],
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: screenHeight * 0.500,
+                  width: screenWidth,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(screenWidth * 0.32),
+                      topRight: Radius.circular(screenWidth * 0.32),
                     ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: screenHeight * 0.500,
-                        width: screenWidth,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(screenWidth * 0.32),
-                            topRight: Radius.circular(screenWidth * 0.32),
+                    gradient: LinearGradient(
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
+                      colors: [
+                        Utils.Purple.withOpacity(0.4),
+                        Utils.Pink.withOpacity(0.4)
+                      ],
+                    ),
+                  ),
+                  child: isSentOtp == true
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: Utils.Purple,
                           ),
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            colors: [
-                              Utils.Purple.withOpacity(0.4),
-                              Utils.Pink.withOpacity(0.4)
-                            ],
-                          ),
-                        ),
-                        child: Column(
+                        )
+                      : Column(
                           children: [
                             SizedBox(
                               height: screenHeight * 0.120,
@@ -148,14 +154,24 @@ class _RegisterViewState extends State<RegisterView> {
                                 ontap: () async {
                                   isSentOtp = true;
                                   viewModel.stateRebuild();
-                                  bool credential = await viewModel.OtpSent(
+                                  dynamic credential = await viewModel.OtpSent(
                                     phoneNumber: PhoneNumberController.text,
-                                    context: context,
+                                    
                                   );
                                   isSentOtp = false;
                                   viewModel.stateRebuild();
 
-                                  if (credential == false) {
+                                  if (credential.runtimeType == Map) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            child: GetOtpView(
+                                                verificationId: credential[
+                                                    'verificationId']),
+                                            type:
+                                                PageTransitionType.bottomToTop,
+                                            duration: Duration(seconds: 2)));
+                                  } else {
                                     isError = true;
                                     viewModel.stateRebuild();
                                   }
@@ -166,22 +182,22 @@ class _RegisterViewState extends State<RegisterView> {
                             )
                           ],
                         ),
-                      ),
-                    ),
-                    Positioned(
-                      top: screenHeight * 0.400,
-                      left: screenWidth * 0.355,
-                      child: Container(
-                        height: screenHeight * 0.220,
-                        width: screenWidth * 0.260,
-                        child: const Image(
-                          image: AssetImage('assets/images/animIcon.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  ],
                 ),
+              ),
+              Positioned(
+                top: screenHeight * 0.400,
+                left: screenWidth * 0.355,
+                child: Container(
+                  height: screenHeight * 0.220,
+                  width: screenWidth * 0.260,
+                  child: const Image(
+                    image: AssetImage('assets/images/animIcon.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
+            ],
+          ),
         );
       },
     );

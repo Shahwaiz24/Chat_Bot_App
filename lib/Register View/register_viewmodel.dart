@@ -1,8 +1,5 @@
-import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
-import 'package:flutter/material.dart';
 
 class RegisterViewmodel extends BaseViewModel {
   stateRebuild() {
@@ -11,7 +8,7 @@ class RegisterViewmodel extends BaseViewModel {
 
   Future OtpSent({
     required String phoneNumber,
-    required BuildContext context,
+    
   }) async {
     bool isCodeSent = false;
     String? Verificationid;
