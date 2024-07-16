@@ -32,25 +32,7 @@ class _RegisterViewState extends State<RegisterView> {
         return Scaffold(
           resizeToAvoidBottomInset: false,
           backgroundColor: Utils.backgroundColor,
-          body: isSentOtp == true
-              ? Stack(
-                  children: [
-                    Container(
-                      height: screenHeight,
-                      width: screenWidth,
-                      child: const Image(
-                        image: AssetImage('assets/images/background_2.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    Center(
-                      child: CircularProgressIndicator(
-                        color: Utils.Purple,
-                      ),
-                    )
-                  ],
-                )
-              : Stack(
+          body: Stack(
                   children: [
                     Container(
                       height: screenHeight,
@@ -167,7 +149,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   isSentOtp = true;
                                   viewModel.stateRebuild();
                                   bool credential = await viewModel.OtpSent(
-                                    PhoneNumber: PhoneNumberController.text,
+                                    phoneNumber: PhoneNumberController.text,
                                     context: context,
                                   );
                                   isSentOtp = false;

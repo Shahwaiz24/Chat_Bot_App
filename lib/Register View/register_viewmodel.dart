@@ -9,32 +9,44 @@ class RegisterViewmodel extends BaseViewModel {
     rebuildUi();
   }
 
-  OtpSent(
-      {required String PhoneNumber, required context}) async {
+  Future OtpSent({
+    required String phoneNumber,
+    required BuildContext context,
+  }) async {
+    bool isCodeSent = false;
+    String? Verificationid;
+
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
-        verificationCompleted: (PhoneAuthCredential PhoneAuthCredential) {
-          print(PhoneAuthCredential.toString());
+        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {
+          print(phoneAuthCredential.toString());
         },
         verificationFailed: (FirebaseAuthException exception) {
           print(exception.toString());
         },
-        codeSent: (String verificationid, int? token) {
-          print('PhoneNumber: ${PhoneNumber}');
-          Navigator.pushReplacement(
-              context,
-              PageTransition(
-                  child: GetOtpView(verificationId: verificationid,),
-                  type: PageTransitionType.bottomToTop,
-                  duration: Duration(seconds: 2)));
+        codeSent: (String verificationId, int? token) {
+          print('PhoneNumber: $phoneNumber');
+
+          isCodeSent = true;
+          Verificationid = verificationId; // Set isCodeSent to true
         },
-        codeAutoRetrievalTimeout: (String verificationid) {},
-        phoneNumber: PhoneNumber,
+        codeAutoRetrievalTimeout: (String verificationId) {},
+        phoneNumber: phoneNumber,
       );
     } on Exception catch (e) {
-      print("Execption: ${e.toString()}");
-      return false;
+      print("Exception: ${e.toString()}");
     }
-    
+
+    if (isCodeSent == true && Verificationid != null) {
+      Map verificationCheck = {
+        'CodeSent': isCodeSent,
+        'verificationId': Verificationid
+      };
+      return verificationCheck;
+    } else {
+      return isCodeSent;
+    }
+
+    // Return the value of isCodeSent
   }
 }
