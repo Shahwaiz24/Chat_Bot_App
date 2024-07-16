@@ -29,7 +29,7 @@ class RegisterViewmodel extends BaseViewModel {
         phoneNumber: "+92${phoneNumber}",
       );
 
-      await Future.delayed(Duration(seconds: 2));
+     
 
       if (verfyId != null) {
         return <String, dynamic>{
