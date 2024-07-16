@@ -50,6 +50,7 @@ class _RegisterViewState extends State<RegisterView> {
                     SizedBox(width: screenWidth * 0.05),
                     InkWell(
                       onTap: () {
+                        isError = false;
                         Navigator.pop(context);
                       },
                       child: Icon(
@@ -106,6 +107,10 @@ class _RegisterViewState extends State<RegisterView> {
                                     right: screenWidth * 0.070),
                                 child: Textfield(
                                   false,
+                                  onChangedFunction: () {
+                                    isError = false;
+                                    viewModel.stateRebuild();
+                                  },
                                   backColor: Utils.Purple,
                                   Controller: PhoneNumberController,
                                   hintColor: Utils.TextColor,

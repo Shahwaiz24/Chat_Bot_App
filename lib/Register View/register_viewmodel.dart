@@ -9,7 +9,7 @@ class RegisterViewmodel extends BaseViewModel {
   Future<Map<String, dynamic>> OtpSent({
     required String phoneNumber,
   }) async {
-    String? verificationId;
+    String? verfyId;
     print(phoneNumber);
 
     try {
@@ -18,31 +18,27 @@ class RegisterViewmodel extends BaseViewModel {
           print(phoneAuthCredential.toString());
         },
         verificationFailed: (FirebaseAuthException exception) {
-          print(exception.toString());
+          print("exection:    ${exception.toString()}");
         },
         codeSent: (String verificationId, int? token) {
           print('PhoneNumber: $phoneNumber');
           // Set verificationId here
-          verificationId = verificationId;
+          verfyId = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
-        phoneNumber: "+92 ${phoneNumber}",
+        phoneNumber: "+92${phoneNumber}",
       );
 
-      // Wait for the codeSent callback to complete
-      await Future.delayed(Duration(seconds: 2)); // adjust the delay as needed
+      await Future.delayed(Duration(seconds: 2));
 
-      if (verificationId != null) {
+      if (verfyId != null) {
         return <String, dynamic>{
           // Use <String, dynamic> instead of {}
           'CodeSent': true,
-          'verificationId': verificationId
+          'verificationId': verfyId
         };
       } else {
-        return <String, dynamic>{
-          // Use <String, dynamic> instead of {}
-          'CodeSent': false
-        };
+        return <String, dynamic>{'CodeSent': false};
       }
     } on Exception catch (e) {
       print("Exception: ${e.toString()}");

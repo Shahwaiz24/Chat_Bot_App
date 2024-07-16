@@ -99,8 +99,10 @@ class _GetOtpViewState extends State<GetOtpView> {
                                       left: screenWidth * 0.070,
                                       right: screenWidth * 0.070),
                                   child: Textfield(
+                                    
                                     true,
                                     backColor: Utils.Purple,
+                                    onChangedFunction: (){},
                                     Controller: OtpController,
                                     hintColor: Utils.TextColor,
                                     hintText: 'Verification Code',

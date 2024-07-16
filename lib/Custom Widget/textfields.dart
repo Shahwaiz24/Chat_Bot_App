@@ -6,6 +6,7 @@ class Textfield extends StatefulWidget {
       {super.key,
       required this.screenHeight,
       required this.Controller,
+      required this.onChangedFunction,
       required this.screenWidth,
       required this.hintText,
       required this.backColor,
@@ -14,6 +15,7 @@ class Textfield extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
   final String hintText;
+  final onChangedFunction;
   final Color hintColor;
   final Color backColor;
   final bool isObsecure;
@@ -27,6 +29,7 @@ class _TextfieldState extends State<Textfield> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      // onChanged: widget.onChangedFunction,
       controller: widget.Controller,
       keyboardType: TextInputType.number,
       style: TextStyle(color: widget.hintColor),
