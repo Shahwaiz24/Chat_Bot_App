@@ -4,6 +4,7 @@ import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:chat_bot/Splash%20View/starting_viewModel.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
@@ -18,6 +19,12 @@ class StartingView extends StatelessWidget {
 
     return ViewModelBuilder<StartingViewmodel>.nonReactive(
       viewModelBuilder: () => StartingViewmodel(),
+      onViewModelReady: (viewModel) async{
+      //  bool getlocation =  await viewModel.getuserlocation();
+      //  if(getlocation == false){
+      //   await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      //  }
+      },
       builder: (context, viewModel, child) {
         return Scaffold(
           body: Stack(

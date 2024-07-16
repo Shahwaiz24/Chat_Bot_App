@@ -166,10 +166,9 @@ class _RegisterViewState extends State<RegisterView> {
                                       await viewModel.OtpSent(
                                     phoneNumber: PhoneNumberController.text,
                                   );
-                                  if (credential['CodeSent'] == true &&
-                                      credential['verificationId'] != null) {
-                                           isSentOtp = false;
-                                    viewModel.stateRebuild();
+                                  isSentOtp = false;
+                                  viewModel.stateRebuild();
+                                  if (credential['CodeSent'] == true) {
                                     Navigator.pushReplacement(
                                         context,
                                         PageTransition(
