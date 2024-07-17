@@ -4,6 +4,7 @@ import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Register%20View/register_viewmodel.dart';
+import 'package:chat_bot/Splash%20View/starting_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
@@ -108,31 +109,21 @@ class _RegisterViewState extends State<RegisterView> {
                               padding: EdgeInsets.only(
                                   left: screenWidth * 0.050,
                                   right: screenWidth * 0.070),
-                              child: Row(
-                                children: [
-                                  DownMenu(
-                                      countryCodes: widget.CountryCodes,
-                                      height: 0.050,
-                                      width: 0.230,
-                                      screenHeight: screenHeight,
-                                      screenWidth: screenWidth),
-                                  SizedBox(
-                                    width: screenWidth * 0.020,
-                                  ),
-                                  Textfield(
-                                    false,
-                                    onChangedFunction: () {
-                                      isError = false;
-                                      viewModel.stateRebuild();
-                                    },
-                                    backColor: Utils.Purple,
-                                    Controller: PhoneNumberController,
-                                    hintColor: Utils.TextColor,
-                                    hintText: 'Enter your phone number',
-                                    screenHeight: screenHeight,
-                                    screenWidth: screenWidth,
-                                  ),
-                                ],
+                              child: Textfield(
+                                false,
+                                isCode: true,
+                                initialCountryCode: CountryCode[1],
+                                countryCodes: CountryCode,
+                                onChangedFunction: () {
+                                  isError = false;
+                                  viewModel.stateRebuild();
+                                },
+                                backColor: Utils.Purple,
+                                Controller: PhoneNumberController,
+                                hintColor: Utils.TextColor,
+                                hintText: 'Enter your phone number',
+                                screenHeight: screenHeight,
+                                screenWidth: screenWidth,
                               ),
                             ),
                             isError == true
