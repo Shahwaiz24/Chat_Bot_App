@@ -18,7 +18,7 @@ class RegisterViewmodel extends BaseViewModel {
           print(phoneAuthCredential.toString());
         },
         verificationFailed: (FirebaseAuthException exception) {
-          print("exection:    ${exception.toString()}");
+          print("exception:    ${exception.toString()}");
         },
         codeSent: (String verificationId, int? token) {
           print('PhoneNumber: $phoneNumber');

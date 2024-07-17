@@ -1,4 +1,5 @@
 import 'package:chat_bot/Custom%20Widget/button.dart';
+import 'package:chat_bot/Custom%20Widget/downMenu.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:chat_bot/Services/utils.dart';
@@ -11,7 +12,9 @@ bool isSentOtp = false;
 bool isError = false;
 
 class RegisterView extends StatefulWidget {
-  const RegisterView({super.key});
+  const RegisterView({super.key, required this.CountryCodes});
+
+  final List<String> CountryCodes;
 
   @override
   State<RegisterView> createState() => _RegisterViewState();
@@ -102,22 +105,36 @@ class _RegisterViewState extends State<RegisterView> {
                               height: screenHeight * 0.100,
                             ),
                             Padding(
-                                padding: EdgeInsets.only(
-                                    left: screenWidth * 0.070,
-                                    right: screenWidth * 0.070),
-                                child: Textfield(
-                                  false,
-                                  onChangedFunction: () {
-                                    isError = false;
-                                    viewModel.stateRebuild();
-                                  },
-                                  backColor: Utils.Purple,
-                                  Controller: PhoneNumberController,
-                                  hintColor: Utils.TextColor,
-                                  hintText: 'Enter your phone number',
-                                  screenHeight: screenHeight,
-                                  screenWidth: screenWidth,
-                                )),
+                              padding: EdgeInsets.only(
+                                  left: screenWidth * 0.050,
+                                  right: screenWidth * 0.070),
+                              child: Row(
+                                children: [
+                                  DownMenu(
+                                      countryCodes: widget.CountryCodes,
+                                      height: 0.050,
+                                      width: 0.230,
+                                      screenHeight: screenHeight,
+                                      screenWidth: screenWidth),
+                                  SizedBox(
+                                    width: screenWidth * 0.020,
+                                  ),
+                                  Textfield(
+                                    false,
+                                    onChangedFunction: () {
+                                      isError = false;
+                                      viewModel.stateRebuild();
+                                    },
+                                    backColor: Utils.Purple,
+                                    Controller: PhoneNumberController,
+                                    hintColor: Utils.TextColor,
+                                    hintText: 'Enter your phone number',
+                                    screenHeight: screenHeight,
+                                    screenWidth: screenWidth,
+                                  ),
+                                ],
+                              ),
+                            ),
                             isError == true
                                 ? Column(
                                     children: [

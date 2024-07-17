@@ -1,26 +1,19 @@
-import 'package:location/location.dart';
+import 'package:chat_bot/Services/api_service.dart';
 import 'package:stacked/stacked.dart';
 
 class StartingViewmodel extends BaseViewModel {
-  // Location location = new Location();
+  ApiService apiService = ApiService();
+  List<String> countryCodeList = [];
 
-  // getuserlocation() async {
-  //   bool _serviceEnabled;
-  //   PermissionStatus _permissionGranted;
-  //   LocationData _locationData;
+  
 
-  //   _serviceEnabled = await location.serviceEnabled();
-  //   if (!_serviceEnabled) {
-  //     _serviceEnabled = await location.requestService();
-  //   }
-  //   _permissionGranted = await location.hasPermission();
-  //   if (_permissionGranted == PermissionStatus.denied) {
-  //     _permissionGranted = await location.requestPermission();
-  //     if (_permissionGranted != PermissionStatus.granted) {
-  //       return false;
-  //     }
-  //   }
-  //   _locationData = await location.getLocation();
-  //   print(_locationData);
+  getCode() async {
+    try {
+      countryCodeList = await apiService.getapi(code: countryCodeList);
+      return countryCodeList;
+    } on Exception catch (e) {
+      print('Execption: ${e.toString()}');
+      // TODO
+    }
   }
-
+}

@@ -4,9 +4,10 @@ import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:chat_bot/Splash%20View/starting_viewModel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
+
+List<String> CountryCode = [];
 
 class StartingView extends StatelessWidget {
   const StartingView({super.key});
@@ -19,12 +20,6 @@ class StartingView extends StatelessWidget {
 
     return ViewModelBuilder<StartingViewmodel>.nonReactive(
       viewModelBuilder: () => StartingViewmodel(),
-      onViewModelReady: (viewModel) async{
-      //  bool getlocation =  await viewModel.getuserlocation();
-      //  if(getlocation == false){
-      //   await SystemChannels.platform.invokeMethod('SystemNavigator.pop');
-      //  }
-      },
       builder: (context, viewModel, child) {
         return Scaffold(
           body: Stack(
@@ -88,14 +83,29 @@ class StartingView extends StatelessWidget {
                     ),
                     // Button Container //
                     InkWell(
-                      onTap: () {
-                        Navigator.push(
-                            context,
-                            PageTransition(
-                                type: PageTransitionType.bottomToTop,
-                                child: const RegisterView(),
-                                duration: Duration(seconds: 2)));
-                        PhoneNumberController.clear();
+                      onTap: () async {
+                        if (CountryCode == null || CountryCode.isEmpty) {
+                          CountryCode = await viewModel.getCode();
+                          print(CountryCode);
+                          print(CountryCode.length);
+                           Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.bottomToTop,
+                                  child: RegisterView(
+                                    CountryCodes: CountryCode,
+                                  ),
+                                  duration: Duration(seconds: 2)));
+                          PhoneNumberController.clear();
+                        } else {
+                          Navigator.push(
+                              context,
+                              PageTransition(
+                                  type: PageTransitionType.bottomToTop,
+                                  child:  RegisterView(CountryCodes: CountryCode,),
+                                  duration: Duration(seconds: 2)));
+                          PhoneNumberController.clear();
+                        }
                       },
                       child: Container(
                         height: screenHeight * 0.250,
