@@ -1,4 +1,6 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -23,9 +25,15 @@ class ApiService {
         }
       }
       return code;
-    } on Exception catch (e) {
-      print("Execption: ${e.toString()}");
-      return [];
+    } on SocketException catch (e) {
+      print('No internet connection: ${e.toString()}');
+      return ['Error']; // Return a list with a single element 'Error'
+    } on TimeoutException catch (e) {
+      print('Timeout error: ${e.toString()}');
+      return ['Error']; // Return a list with a single element 'Error'
+    } catch (e) {
+      print('Unknown error: ${e.toString()}');
+      return ['Error']; // Return a list with a single element 'Error'
     }
   }
 }
