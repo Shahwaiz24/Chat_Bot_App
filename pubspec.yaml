@@ -39,7 +39,6 @@ dependencies:
   page_transition: "^2.1.0"
   firebase_auth: ^5.1.2
   firebase_core: ^3.2.0
-  location: ^7.0.0
   http: ^1.2.2
 
 dev_dependencies:

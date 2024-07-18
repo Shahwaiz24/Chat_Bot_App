@@ -1,5 +1,4 @@
 import 'package:chat_bot/Custom%20Widget/button.dart';
-import 'package:chat_bot/Custom%20Widget/downMenu.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:chat_bot/Services/utils.dart';
@@ -11,6 +10,7 @@ import 'package:stacked/stacked.dart';
 
 bool isSentOtp = false;
 bool isError = false;
+bool isTextfieldOpen = false;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key, required this.CountryCodes});
@@ -34,7 +34,7 @@ class _RegisterViewState extends State<RegisterView> {
       viewModelBuilder: () => RegisterViewmodel(),
       builder: (context, viewModel, child) {
         return Scaffold(
-          resizeToAvoidBottomInset: false,
+          resizeToAvoidBottomInset: true,
           backgroundColor: Utils.backgroundColor,
           body: Stack(
             children: [
@@ -109,21 +109,27 @@ class _RegisterViewState extends State<RegisterView> {
                               padding: EdgeInsets.only(
                                   left: screenWidth * 0.050,
                                   right: screenWidth * 0.070),
-                              child: Textfield(
-                                false,
-                                isCode: true,
-                                initialCountryCode: CountryCode[1],
-                                countryCodes: CountryCode,
-                                onChangedFunction: () {
-                                  isError = false;
+                              child: InkWell(
+                                onTap: () {
+                                  isTextfieldOpen = true;
                                   viewModel.stateRebuild();
                                 },
-                                backColor: Utils.Purple,
-                                Controller: PhoneNumberController,
-                                hintColor: Utils.TextColor,
-                                hintText: 'Enter your phone number',
-                                screenHeight: screenHeight,
-                                screenWidth: screenWidth,
+                                child: Textfield(
+                                  false,
+                                  isCode: true,
+                                  initialCountryCode: CountryCode[1],
+                                  countryCodes: CountryCode,
+                                  onChangedFunction: (String value) {
+                                    isTextfieldOpen = false;
+                                    viewModel.stateRebuild();
+                                  },
+                                  backColor: Utils.Purple,
+                                  Controller: PhoneNumberController,
+                                  hintColor: Utils.TextColor,
+                                  hintText: 'Enter your phone number',
+                                  screenHeight: screenHeight,
+                                  screenWidth: screenWidth,
+                                ),
                               ),
                             ),
                             isError == true
@@ -172,6 +178,7 @@ class _RegisterViewState extends State<RegisterView> {
                                   viewModel.stateRebuild();
                                   Map<String, dynamic> credential =
                                       await viewModel.OtpSent(
+                                    CountryCode: selectedCountryCode,
                                     phoneNumber: PhoneNumberController.text,
                                   );
                                   isSentOtp = false;
@@ -201,18 +208,20 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                 ),
               ),
-              Positioned(
-                top: screenHeight * 0.400,
-                left: screenWidth * 0.355,
-                child: Container(
-                  height: screenHeight * 0.220,
-                  width: screenWidth * 0.260,
-                  child: const Image(
-                    image: AssetImage('assets/images/animIcon.png'),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              )
+              isTextfieldOpen == true
+                  ? Positioned(
+                      top: screenHeight * 0.400,
+                      left: screenWidth * 0.355,
+                      child: Container(
+                        height: screenHeight * 0.220,
+                        width: screenWidth * 0.260,
+                        child: const Image(
+                          image: AssetImage('assets/images/animIcon.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    )
+                  : Text(''),
             ],
           ),
         );

@@ -1,5 +1,8 @@
+import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:flutter/material.dart';
+
+String selectedCountryCode = '';
 
 class Textfield extends StatefulWidget {
   const Textfield(this.isObsecure,
@@ -18,6 +21,7 @@ class Textfield extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
   final String hintText;
+  // ignore: prefer_typing_uninitialized_variables
   final onChangedFunction;
   final Color hintColor;
   final bool isCode;
@@ -32,12 +36,19 @@ class Textfield extends StatefulWidget {
 }
 
 class _TextfieldState extends State<Textfield> {
-  String _selectedCountryCode = '';
+  List<DropdownMenuItem<String>> get items {
+    return widget.countryCodes.map((countryCode) {
+      return DropdownMenuItem(
+        value: countryCode,
+        child: Text(countryCode),
+      );
+    }).toList();
+  }
 
   @override
   void initState() {
     super.initState();
-    _selectedCountryCode = widget.initialCountryCode;
+    selectedCountryCode = widget.initialCountryCode;
   }
 
   @override
@@ -77,10 +88,30 @@ class _TextfieldState extends State<Textfield> {
             ),
             child: Row(
               children: [
+                DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+                      value: selectedCountryCode,
+                      alignment: Alignment.center,
+                      icon: Icon(Icons.arrow_drop_down),
+                      iconSize: widget.screenHeight * 0.030,
+                      iconEnabledColor: widget.hintColor,
+                      elevation: 16,
+                      dropdownColor: widget.backColor.withOpacity(0.2),
+                      style: TextStyle(
+                        color: widget.hintColor,
+                      ),
+                      onChanged: (String? newValue) {
+                        setState(() {
+                          selectedCountryCode = newValue!;
+                        });
+                      },
+                      items: items),
+                ),
                 Expanded(
                   child: TextFormField(
                     // onChanged: widget.onChangedFunction,
                     controller: widget.Controller,
+                    onFieldSubmitted: widget.onChangedFunction,
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: widget.hintColor),
                     obscureText: widget.isObsecure == true ? true : false,

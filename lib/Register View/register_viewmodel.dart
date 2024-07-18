@@ -8,6 +8,7 @@ class RegisterViewmodel extends BaseViewModel {
 
   Future<Map<String, dynamic>> OtpSent({
     required String phoneNumber,
+    required String CountryCode
   }) async {
     String? verfyId;
     print(phoneNumber);
@@ -26,7 +27,7 @@ class RegisterViewmodel extends BaseViewModel {
           verfyId = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
-        phoneNumber: "+92${phoneNumber}",
+        phoneNumber: "${CountryCode}${phoneNumber}",
       );
 
      
