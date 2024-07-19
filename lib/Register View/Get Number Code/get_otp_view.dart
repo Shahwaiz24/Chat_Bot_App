@@ -100,6 +100,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                                       right: screenWidth * 0.070),
                                   child: Textfield(
                                     true,
+                                    isChat: false,
                                     initialCountryCode: '',
                                     countryCodes: [],
                                     isCode: false,
@@ -129,7 +130,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                                               SizedBox(
                                                 width: screenWidth * 0.010,
                                               ),
-                                              Text('Enter a valid Number',
+                                              Text('Enter a valid OTP Number',
                                                   style: TextStyle(
                                                       color: Utils.TextColor,
                                                       fontSize: screenHeight *
@@ -154,6 +155,9 @@ class _GetOtpViewState extends State<GetOtpView> {
                                     bool otpCheck = await viewmodel.otpCheck(
                                         verificationId: widget.verificationId,
                                         enteredCode: OtpController.text);
+                                            otpChecking = true;
+                                    viewmodel.stateRebuild();
+
                                     if (otpCheck == true) {
                                       Navigator.pushReplacement(
                                           context,

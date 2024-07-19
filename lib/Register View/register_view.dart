@@ -111,6 +111,7 @@ class _RegisterViewState extends State<RegisterView> {
                               child: Textfield(
                                 false,
                                 isCode: true,
+                                isChat: false,
                                 initialCountryCode: CountryCode[1],
                                 countryCodes: CountryCode,
                                 backColor: Utils.Purple,

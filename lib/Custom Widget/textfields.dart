@@ -11,7 +11,7 @@ class Textfield extends StatefulWidget {
       required this.screenHeight,
       required this.isCode,
       required this.Controller,
-     
+      required this.isChat,
       required this.screenWidth,
       required this.hintText,
       required this.backColor,
@@ -22,7 +22,7 @@ class Textfield extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
   final String hintText;
-
+  final bool isChat;
 
   final Color hintColor;
   final bool isCode;
@@ -64,22 +64,39 @@ class _TextfieldState extends State<Textfield> {
             obscuringCharacter: '*',
             decoration: InputDecoration(
               hintText: widget.hintText,
-              fillColor: widget.backColor.withOpacity(0.2),
+              fillColor: widget.isChat == true
+                  ? Utils.TextColor
+                  : widget.backColor.withOpacity(0.2),
               filled: true,
               contentPadding: EdgeInsets.only(
                   top: widget.screenHeight * 0.060,
                   left: widget.screenWidth * 0.080),
-              hintStyle: TextStyle(color: widget.hintColor.withOpacity(0.6)),
+              hintStyle: TextStyle(color: widget.hintColor.withOpacity(0.7)),
               enabledBorder: OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(widget.screenWidth * 0.115),
                   borderSide: BorderSide(
-                      width: 0.8, color: Utils.TextColor.withOpacity(0.4))),
+                      width: 0.8,
+                      color: widget.isChat == true
+                          ? Utils.Black.withOpacity(0.7)
+                          : Utils.TextColor.withOpacity(0.4))),
               focusedBorder: OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(widget.screenWidth * 0.115),
                   borderSide: BorderSide(
-                      width: 0.8, color: Utils.TextColor.withOpacity(0.4))),
+                      width: 0.8,
+                      color: widget.isChat == true
+                          ? Utils.Black.withOpacity(0.7)
+                          : Utils.TextColor.withOpacity(0.4))),
+              suffixIcon: widget.isChat == true
+                  ? InkWell(
+                    onTap: (){},
+                    child: Icon(
+                        Icons.send_rounded,
+                        color: Utils.Purple,
+                      ),
+                  )
+                  : Text(''),
             ),
           )
         : Container(
@@ -112,7 +129,6 @@ class _TextfieldState extends State<Textfield> {
                   child: TextFormField(
                     // onChanged: widget.onChangedFunction,
                     controller: widget.Controller,
-                   
 
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: widget.hintColor),

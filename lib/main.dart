@@ -1,3 +1,4 @@
+import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
 import 'package:chat_bot/Splash View/starting_view.dart';
 import 'package:chat_bot/firebase_options.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +19,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Chivo-Light'),
       debugShowCheckedModeBanner: false,
-      home: const StartingView(),
+      home: const ChatBotView(),
     );
   }
 }
