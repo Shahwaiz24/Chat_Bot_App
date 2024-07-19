@@ -66,7 +66,11 @@ class _TextfieldState extends State<Textfield> {
             keyboardType: widget.isChat == true
                 ? TextInputType.text
                 : TextInputType.number,
-            style: TextStyle(color: widget.hintColor),
+            style: TextStyle(
+                color: widget.isChat == true
+                    ? Utils.Black.withOpacity(0.7)
+                    : widget.hintColor,
+                fontWeight: FontWeight.w500),
             obscureText: widget.isObsecure == true ? true : false,
             obscuringCharacter: '*',
             decoration: InputDecoration(
@@ -78,7 +82,8 @@ class _TextfieldState extends State<Textfield> {
               contentPadding: EdgeInsets.only(
                   top: widget.screenHeight * 0.060,
                   left: widget.screenWidth * 0.080),
-              hintStyle: TextStyle(color: widget.hintColor.withOpacity(0.7)),
+              hintStyle:
+                  TextStyle(color: Utils.Pink, fontWeight: FontWeight.w600),
               enabledBorder: OutlineInputBorder(
                   borderRadius:
                       BorderRadius.circular(widget.screenWidth * 0.115),
@@ -95,9 +100,7 @@ class _TextfieldState extends State<Textfield> {
                       color: widget.isChat == true
                           ? Utils.Black.withOpacity(0.7)
                           : Utils.TextColor.withOpacity(0.4))),
-              suffixIcon: widget.isChat == true
-                  ? widget.surfix
-                  : Text(''),
+              suffixIcon: widget.isChat == true ? widget.surfix : Text(''),
             ),
           )
         : Container(
