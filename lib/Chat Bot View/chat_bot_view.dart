@@ -6,7 +6,7 @@ import 'package:chat_bot/Services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-bool isView = true;
+bool isView = false;
 
 class ChatBotView extends StatefulWidget {
   const ChatBotView({super.key});
