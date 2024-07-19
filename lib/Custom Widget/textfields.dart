@@ -1,6 +1,9 @@
+import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
 import 'package:chat_bot/Register%20View/register_view.dart';
+import 'package:chat_bot/Services/chat_services.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:http/retry.dart';
 
 String selectedCountryCode = '';
@@ -9,6 +12,7 @@ class Textfield extends StatefulWidget {
   const Textfield(this.isObsecure,
       {super.key,
       required this.screenHeight,
+      required Widget this.surfix,
       required this.isCode,
       required this.Controller,
       required this.isChat,
@@ -23,6 +27,7 @@ class Textfield extends StatefulWidget {
   final double screenWidth;
   final String hintText;
   final bool isChat;
+  final Widget surfix;
 
   final Color hintColor;
   final bool isCode;
@@ -58,7 +63,9 @@ class _TextfieldState extends State<Textfield> {
         ? TextFormField(
             // onChanged: widget.onChangedFunction,
             controller: widget.Controller,
-            keyboardType: TextInputType.number,
+            keyboardType: widget.isChat == true
+                ? TextInputType.text
+                : TextInputType.number,
             style: TextStyle(color: widget.hintColor),
             obscureText: widget.isObsecure == true ? true : false,
             obscuringCharacter: '*',
@@ -89,13 +96,7 @@ class _TextfieldState extends State<Textfield> {
                           ? Utils.Black.withOpacity(0.7)
                           : Utils.TextColor.withOpacity(0.4))),
               suffixIcon: widget.isChat == true
-                  ? InkWell(
-                    onTap: (){},
-                    child: Icon(
-                        Icons.send_rounded,
-                        color: Utils.Purple,
-                      ),
-                  )
+                  ? widget.surfix
                   : Text(''),
             ),
           )

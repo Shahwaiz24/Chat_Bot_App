@@ -101,6 +101,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                                   child: Textfield(
                                     true,
                                     isChat: false,
+                                    surfix: Text(''),
                                     initialCountryCode: '',
                                     countryCodes: [],
                                     isCode: false,

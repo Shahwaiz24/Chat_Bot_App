@@ -112,6 +112,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 false,
                                 isCode: true,
                                 isChat: false,
+                                surfix: Text(''),
                                 initialCountryCode: CountryCode[1],
                                 countryCodes: CountryCode,
                                 backColor: Utils.Purple,

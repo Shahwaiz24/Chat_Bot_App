@@ -1,8 +1,12 @@
 import 'package:chat_bot/Chat%20Bot%20View/chat_bot_viewmodel.dart';
+import 'package:chat_bot/Custom%20Widget/chat_message.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
+import 'package:chat_bot/Services/chat_services.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+
+bool isView = true;
 
 class ChatBotView extends StatefulWidget {
   const ChatBotView({super.key});
@@ -22,7 +26,7 @@ class _ChatBotViewState extends State<ChatBotView> {
 
     return ViewModelBuilder.reactive(
         viewModelBuilder: () => ChatBotViewmodel(),
-        builder: (context, child, viewmodel) {
+        builder: (context, viewModel, child) {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Utils.backgroundColor,
@@ -40,45 +44,58 @@ class _ChatBotViewState extends State<ChatBotView> {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     width: screenWidth,
-                    height: screenHeight * 0.450,
+                    height: isView == true
+                        ? screenHeight * 0.800
+                        : screenHeight * 0.450,
                     decoration: BoxDecoration(
                         color: Utils.TextColor,
                         borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(screenWidth * 0.080),
                             topRight: Radius.circular(screenWidth * 0.080))),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              top: screenHeight * 0.100,
-                              left: screenWidth * 0.050,
-                              bottom: screenHeight * 0.010),
-                          child: Text(
-                            'Welcome To Atom',
-                            style: TextStyle(
-                                color: Utils.Black,
-                                fontSize: screenHeight * 0.030),
+                    child: isView == true
+                        ? ListView.builder(
+                            itemCount: chats.length,
+                            itemBuilder: (context, index) {
+                              return ChatMessage(
+                                userChat: chats[index].userChat,
+                                chatData: chats[index],
+                              );
+                            })
+                        : Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    top: screenHeight * 0.100,
+                                    left: screenWidth * 0.050,
+                                    bottom: screenHeight * 0.010),
+                                child: Text(
+                                  'Welcome To Atom',
+                                  style: TextStyle(
+                                      color: Utils.Black,
+                                      fontSize: screenHeight * 0.030),
+                                ),
+                              ),
+                              Padding(
+                                padding: EdgeInsets.only(
+                                    left: screenWidth * 0.060,
+                                    bottom: screenHeight * 0.050),
+                                child: Text(
+                                  'Ask Any Question',
+                                  style: TextStyle(
+                                      color: Utils.Black,
+                                      fontSize: screenHeight * 0.020),
+                                ),
+                              )
+                            ],
                           ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: screenWidth * 0.060,
-                              bottom: screenHeight * 0.050),
-                          child: Text(
-                            'Ask Any Question',
-                            style: TextStyle(
-                                color: Utils.Black,
-                                fontSize: screenHeight * 0.020),
-                          ),
-                        )
-                      ],
-                    ),
                   ),
                 ),
                 Positioned(
-                  top: screenHeight * 0.480,
+                  top: isView == true
+                      ? screenHeight * 0.120
+                      : screenHeight * 0.480,
                   left: screenWidth * 0.360,
                   child: Container(
                     height: screenHeight * 0.180,
@@ -100,6 +117,19 @@ class _ChatBotViewState extends State<ChatBotView> {
                         screenHeight: screenHeight,
                         isCode: false,
                         isChat: true,
+                        surfix: InkWell(
+                          onTap: () async {
+                            isView = true;
+                            viewModel.stateRebuild();
+                            await ChatServices.postMessage(
+                                Text: promptControlloer.text);
+                            viewModel.stateRebuild();
+                          },
+                          child: Icon(
+                            Icons.send_rounded,
+                            color: Utils.Purple,
+                          ),
+                        ),
                         Controller: promptControlloer,
                         screenWidth: screenWidth,
                         hintText: 'Enter Prompt Here',
