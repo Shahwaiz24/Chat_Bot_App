@@ -104,7 +104,6 @@ class _GetOtpViewState extends State<GetOtpView> {
                                     countryCodes: [],
                                     isCode: false,
                                     backColor: Utils.Purple,
-                                    onChangedFunction: () {},
                                     Controller: OtpController,
                                     hintColor: Utils.TextColor,
                                     hintText: 'Verification Code',

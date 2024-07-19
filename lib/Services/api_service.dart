@@ -24,6 +24,10 @@ class ApiService {
           code.add(countryCode);
         }
       }
+
+      // Sort the list in ascending order
+      code.sort((a, b) => a.compareTo(b));
+
       return code;
     } on SocketException catch (e) {
       print('No internet connection: ${e.toString()}');

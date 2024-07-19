@@ -1,6 +1,7 @@
 import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:http/retry.dart';
 
 String selectedCountryCode = '';
 
@@ -10,7 +11,7 @@ class Textfield extends StatefulWidget {
       required this.screenHeight,
       required this.isCode,
       required this.Controller,
-      required this.onChangedFunction,
+     
       required this.screenWidth,
       required this.hintText,
       required this.backColor,
@@ -21,8 +22,8 @@ class Textfield extends StatefulWidget {
   final double screenHeight;
   final double screenWidth;
   final String hintText;
-  // ignore: prefer_typing_uninitialized_variables
-  final onChangedFunction;
+
+
   final Color hintColor;
   final bool isCode;
   final Color backColor;
@@ -111,7 +112,8 @@ class _TextfieldState extends State<Textfield> {
                   child: TextFormField(
                     // onChanged: widget.onChangedFunction,
                     controller: widget.Controller,
-                    onFieldSubmitted: widget.onChangedFunction,
+                   
+
                     keyboardType: TextInputType.number,
                     style: TextStyle(color: widget.hintColor),
                     obscureText: widget.isObsecure == true ? true : false,

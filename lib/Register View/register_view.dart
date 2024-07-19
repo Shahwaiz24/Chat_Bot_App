@@ -10,7 +10,6 @@ import 'package:stacked/stacked.dart';
 
 bool isSentOtp = false;
 bool isError = false;
-bool isTextfieldOpen = false;
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key, required this.CountryCodes});
@@ -34,7 +33,7 @@ class _RegisterViewState extends State<RegisterView> {
       viewModelBuilder: () => RegisterViewmodel(),
       builder: (context, viewModel, child) {
         return Scaffold(
-          resizeToAvoidBottomInset: true,
+          resizeToAvoidBottomInset: false,
           backgroundColor: Utils.backgroundColor,
           body: Stack(
             children: [
@@ -109,27 +108,17 @@ class _RegisterViewState extends State<RegisterView> {
                               padding: EdgeInsets.only(
                                   left: screenWidth * 0.050,
                                   right: screenWidth * 0.070),
-                              child: InkWell(
-                                onTap: () {
-                                  isTextfieldOpen = true;
-                                  viewModel.stateRebuild();
-                                },
-                                child: Textfield(
-                                  false,
-                                  isCode: true,
-                                  initialCountryCode: CountryCode[1],
-                                  countryCodes: CountryCode,
-                                  onChangedFunction: (String value) {
-                                    isTextfieldOpen = false;
-                                    viewModel.stateRebuild();
-                                  },
-                                  backColor: Utils.Purple,
-                                  Controller: PhoneNumberController,
-                                  hintColor: Utils.TextColor,
-                                  hintText: 'Enter your phone number',
-                                  screenHeight: screenHeight,
-                                  screenWidth: screenWidth,
-                                ),
+                              child: Textfield(
+                                false,
+                                isCode: true,
+                                initialCountryCode: CountryCode[1],
+                                countryCodes: CountryCode,
+                                backColor: Utils.Purple,
+                                Controller: PhoneNumberController,
+                                hintColor: Utils.TextColor,
+                                hintText: 'Enter your phone number',
+                                screenHeight: screenHeight,
+                                screenWidth: screenWidth,
                               ),
                             ),
                             isError == true
@@ -175,6 +164,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 text: 'Send Code',
                                 ontap: () async {
                                   isSentOtp = true;
+                                  isError = false;
                                   viewModel.stateRebuild();
                                   Map<String, dynamic> credential =
                                       await viewModel.OtpSent(
@@ -208,20 +198,18 @@ class _RegisterViewState extends State<RegisterView> {
                         ),
                 ),
               ),
-              isTextfieldOpen == true
-                  ? Positioned(
-                      top: screenHeight * 0.400,
-                      left: screenWidth * 0.355,
-                      child: Container(
-                        height: screenHeight * 0.220,
-                        width: screenWidth * 0.260,
-                        child: const Image(
-                          image: AssetImage('assets/images/animIcon.png'),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    )
-                  : Text(''),
+              Positioned(
+                top: screenHeight * 0.400,
+                left: screenWidth * 0.355,
+                child: Container(
+                  height: screenHeight * 0.220,
+                  width: screenWidth * 0.260,
+                  child: const Image(
+                    image: AssetImage('assets/images/animIcon.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              )
             ],
           ),
         );
