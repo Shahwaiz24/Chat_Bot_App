@@ -33,54 +33,42 @@ class _GetOtpViewState extends State<GetOtpView> {
           return Scaffold(
             resizeToAvoidBottomInset: false,
             backgroundColor: Utils.backgroundColor,
-            body: otpChecking == true
-                ? Stack(
-                    children: [
-                      Container(
-                        height: screenHeight,
-                        width: screenWidth,
-                        child: const Image(
-                          image: AssetImage('assets/images/background_2.png'),
-                          fit: BoxFit.cover,
-                        ),
+            body: Stack(
+              children: [
+                Container(
+                  height: screenHeight,
+                  width: screenWidth,
+                  child: const Image(
+                    image: AssetImage('assets/images/background_2.png'),
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: screenHeight * 0.500,
+                    width: screenWidth,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(screenWidth * 0.32),
+                        topRight: Radius.circular(screenWidth * 0.32),
                       ),
-                      Center(
-                        child: CircularProgressIndicator(
-                          color: Utils.Purple,
-                        ),
-                      )
-                    ],
-                  )
-                : Stack(
-                    children: [
-                      Container(
-                        height: screenHeight,
-                        width: screenWidth,
-                        child: const Image(
-                          image: AssetImage('assets/images/background_2.png'),
-                          fit: BoxFit.cover,
-                        ),
+                      gradient: LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Utils.Purple.withOpacity(0.4),
+                          Utils.Pink.withOpacity(0.4)
+                        ],
                       ),
-                      Align(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                          height: screenHeight * 0.500,
-                          width: screenWidth,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(screenWidth * 0.32),
-                              topRight: Radius.circular(screenWidth * 0.32),
+                    ),
+                    child: otpChecking == true
+                        ? Center(
+                            child: CircularProgressIndicator(
+                              color: Utils.Purple,
                             ),
-                            gradient: LinearGradient(
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomCenter,
-                              colors: [
-                                Utils.Purple.withOpacity(0.4),
-                                Utils.Pink.withOpacity(0.4)
-                              ],
-                            ),
-                          ),
-                          child: Column(
+                          )
+                        : Column(
                             children: [
                               SizedBox(
                                 height: screenHeight * 0.120,
@@ -156,7 +144,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                                     bool otpCheck = await viewmodel.otpCheck(
                                         verificationId: widget.verificationId,
                                         enteredCode: OtpController.text);
-                                            otpChecking = true;
+                                    otpChecking = true;
                                     viewmodel.stateRebuild();
 
                                     if (otpCheck == true) {
@@ -180,22 +168,22 @@ class _GetOtpViewState extends State<GetOtpView> {
                               )
                             ],
                           ),
-                        ),
-                      ),
-                      Positioned(
-                        top: screenHeight * 0.400,
-                        left: screenWidth * 0.355,
-                        child: Container(
-                          height: screenHeight * 0.220,
-                          width: screenWidth * 0.260,
-                          child: const Image(
-                            image: AssetImage('assets/images/animIcon.png'),
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                      )
-                    ],
                   ),
+                ),
+                Positioned(
+                  top: screenHeight * 0.400,
+                  left: screenWidth * 0.355,
+                  child: Container(
+                    height: screenHeight * 0.220,
+                    width: screenWidth * 0.260,
+                    child: const Image(
+                      image: AssetImage('assets/images/animIcon.png'),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                )
+              ],
+            ),
           );
         });
   }

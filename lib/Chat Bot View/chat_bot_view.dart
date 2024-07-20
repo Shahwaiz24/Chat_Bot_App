@@ -4,6 +4,7 @@ import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Services/chat_services.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
 
 bool isView = false;
@@ -18,22 +19,24 @@ class ChatBotView extends StatefulWidget {
 TextEditingController promptControlloer = TextEditingController();
 
 class _ChatBotViewState extends State<ChatBotView> {
-  final ScrollController _scrollController = ScrollController();
+  ScrollController? _controller;
 
-  void _scrollToEnd() {
-    if (_scrollController.hasClients) {
-      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
-    }
-  }
+  @override
+  void initState() {
+    _controller = ScrollController();
 
-  // Call _scrollToEnd when a new message is added to the list
-  void _onMessageAdded() {
-    _scrollToEnd();
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      _controller!.animateTo(
+        _controller!.position.maxScrollExtent,
+        duration: const Duration(milliseconds: 300),
+        curve: Curves.easeOut,
+      );
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Get Size
+    // Get Sizew
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
 
@@ -71,7 +74,7 @@ class _ChatBotViewState extends State<ChatBotView> {
                               Expanded(
                                 child: ListView.builder(
                                     itemCount: chats.length,
-                                    controller: _scrollController,
+                                    controller: _controller,
                                     itemBuilder: (context, index) {
                                       return ChatMessage(
                                         userChat: chats[index].userChat,
@@ -146,7 +149,7 @@ class _ChatBotViewState extends State<ChatBotView> {
                             viewModel.stateRebuild();
                             await ChatServices.postMessage(
                                 Text: promptControlloer.text);
-                            _onMessageAdded();
+
                             viewModel.stateRebuild();
                           },
                           child: Icon(
