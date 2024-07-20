@@ -18,6 +18,19 @@ class ChatBotView extends StatefulWidget {
 TextEditingController promptControlloer = TextEditingController();
 
 class _ChatBotViewState extends State<ChatBotView> {
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollToEnd() {
+    if (_scrollController.hasClients) {
+      _scrollController.jumpTo(_scrollController.position.maxScrollExtent);
+    }
+  }
+
+  // Call _scrollToEnd when a new message is added to the list
+  void _onMessageAdded() {
+    _scrollToEnd();
+  }
+
   @override
   Widget build(BuildContext context) {
     // Get Size
@@ -53,14 +66,24 @@ class _ChatBotViewState extends State<ChatBotView> {
                             topLeft: Radius.circular(screenWidth * 0.080),
                             topRight: Radius.circular(screenWidth * 0.080))),
                     child: isView == true
-                        ? ListView.builder(
-                            itemCount: chats.length,
-                            itemBuilder: (context, index) {
-                              return ChatMessage(
-                                userChat: chats[index].userChat,
-                                chatData: chats[index],
-                              );
-                            })
+                        ? Column(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                    itemCount: chats.length,
+                                    controller: _scrollController,
+                                    itemBuilder: (context, index) {
+                                      return ChatMessage(
+                                        userChat: chats[index].userChat,
+                                        chatData: chats[index],
+                                      );
+                                    }),
+                              ),
+                              Container(
+                                height: screenHeight * 0.120,
+                              )
+                            ],
+                          )
                         : Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -123,6 +146,7 @@ class _ChatBotViewState extends State<ChatBotView> {
                             viewModel.stateRebuild();
                             await ChatServices.postMessage(
                                 Text: promptControlloer.text);
+                            _onMessageAdded();
                             viewModel.stateRebuild();
                           },
                           child: Icon(

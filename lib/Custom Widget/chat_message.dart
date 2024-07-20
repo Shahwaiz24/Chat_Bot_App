@@ -17,47 +17,56 @@ class _ChatMessageState extends State<ChatMessage> {
   @override
   Widget build(BuildContext context) {
     return Row(
-        mainAxisAlignment:
-            widget.userChat ? MainAxisAlignment.end : MainAxisAlignment.start,
-        children: [
-          Container(
+      mainAxisAlignment:
+          widget.userChat ? MainAxisAlignment.end : MainAxisAlignment.start,
+      children: [
+        ConstrainedBox(
+          constraints: BoxConstraints(
+            maxWidth: MediaQuery.of(context).size.width * 0.6,
+            minWidth: MediaQuery.of(context).size.width * 0.2,
+          ),
+          child: Container(
             padding: const EdgeInsets.all(8),
             margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-            constraints: BoxConstraints(
-              maxWidth: MediaQuery.of(context).size.width * 0.6,
-              minWidth: MediaQuery.of(context).size.width * 0.2,
-              maxHeight: MediaQuery.of(context).size.width * 0.8,
-            ),
-            // height: 100,
-            // width: 300,
             decoration: BoxDecoration(
-                borderRadius: BorderRadius.only(
-                    topLeft: widget.userChat == false
-                        ? const Radius.circular(10)
-                        : const Radius.circular(0),
-                    topRight: widget.userChat
-                        ? const Radius.circular(0)
-                        : const Radius.circular(10),
-                    bottomLeft: const Radius.circular(10),
-                    bottomRight: const Radius.circular(10)),
-                color: widget.userChat
-                    ? const Color(0xffEFF4FF)
-                    : const Color(0xffF3F3F3)),
+              borderRadius: BorderRadius.only(
+                topLeft: widget.userChat == false
+                    ? const Radius.circular(10)
+                    : const Radius.circular(0),
+                topRight: widget.userChat
+                    ? const Radius.circular(0)
+                    : const Radius.circular(10),
+                bottomLeft: const Radius.circular(10),
+                bottomRight: const Radius.circular(10),
+              ),
+              color: widget.userChat == true
+                  ? const Color(0xffEFF4FF)
+                  : Colors.red,
+            ),
             child: widget.userChat == true
                 ? Text(
                     widget.chatData.chatContent,
                     style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.bold),
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
                   )
-                : TypeWriter.text(
-                    style: TextStyle(
+                : Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).size.height * 0.030),
+                    child: TypeWriter.text(
+                      style: TextStyle(
                         color: Utils.Black,
                         fontSize: 16,
-                        fontWeight: FontWeight.bold),
-                    widget.chatData.chatContent,
-                    duration: const Duration(milliseconds: 50),
+                        fontWeight: FontWeight.bold,
+                      ),
+                      widget.chatData.chatContent,
+                      duration: const Duration(milliseconds: 50),
+                    ),
                   ),
           ),
-        ]);
+        ),
+      ],
+    );
   }
 }
