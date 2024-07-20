@@ -173,9 +173,10 @@ class _RegisterViewState extends State<RegisterView> {
                                     CountryCode: selectedCountryCode,
                                     phoneNumber: PhoneNumberController.text,
                                   );
-                                  isSentOtp = false;
-                                  viewModel.stateRebuild();
                                   if (credential['CodeSent'] == true) {
+                                    isSentOtp = false;
+                                    viewModel.stateRebuild();
+                                   await Future.delayed(Duration(milliseconds: 500));
                                     Navigator.pushReplacement(
                                         context,
                                         PageTransition(
@@ -186,8 +187,9 @@ class _RegisterViewState extends State<RegisterView> {
                                                 PageTransitionType.bottomToTop,
                                             duration: Duration(seconds: 2)));
                                     PhoneNumberController.clear();
-                                  } else {
-                                    isError = true;
+                                  } else if (credential['CodeSent'] == false) {
+                                         isSentOtp = false;
+                                         isError = true;
                                     viewModel.stateRebuild();
                                     PhoneNumberController.clear();
                                   }

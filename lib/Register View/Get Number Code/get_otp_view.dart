@@ -144,10 +144,12 @@ class _GetOtpViewState extends State<GetOtpView> {
                                     bool otpCheck = await viewmodel.otpCheck(
                                         verificationId: widget.verificationId,
                                         enteredCode: OtpController.text);
-                                    otpChecking = true;
-                                    viewmodel.stateRebuild();
 
                                     if (otpCheck == true) {
+                                      otpChecking = true;
+                                      viewmodel.stateRebuild();
+                                      await Future.delayed(
+                                          Duration(milliseconds: 500));
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(
@@ -155,8 +157,9 @@ class _GetOtpViewState extends State<GetOtpView> {
                                               type: PageTransitionType
                                                   .bottomToTop,
                                               duration: Duration(seconds: 2)));
-                                    } else {
+                                    } else if (otpCheck == false) {
                                       isOtperror = true;
+                                      otpChecking = false;
                                       viewmodel.stateRebuild();
                                     }
 

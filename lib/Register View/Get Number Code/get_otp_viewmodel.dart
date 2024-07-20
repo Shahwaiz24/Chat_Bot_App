@@ -7,10 +7,10 @@ class GetOtpViewmodel extends BaseViewModel {
     rebuildUi();
   }
 
-bool otpCheck({required String verificationId, required String enteredCode}) {
+Future<bool> otpCheck({required String verificationId, required String enteredCode}) async {
     PhoneAuthCredential credential;
     try {
-      credential = PhoneAuthProvider.credential(
+      credential = await PhoneAuthProvider.credential(
           verificationId: verificationId, smsCode: enteredCode);
       FirebaseAuth.instance.signInWithCredential(credential);
       return true;

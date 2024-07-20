@@ -24,7 +24,7 @@ class RegisterViewmodel extends BaseViewModel {
         codeSent: (String verificationId, int? token) {
           print('PhoneNumber: $phoneNumber');
           // Set verificationId here
-          verfyId = verificationId;
+         verfyId = verificationId;
         },
         codeAutoRetrievalTimeout: (String verificationId) {},
         phoneNumber: "${CountryCode}${phoneNumber}",
@@ -34,7 +34,6 @@ class RegisterViewmodel extends BaseViewModel {
 
       if (verfyId != null) {
         return <String, dynamic>{
-          // Use <String, dynamic> instead of {}
           'CodeSent': true,
           'verificationId': verfyId
         };
@@ -44,7 +43,6 @@ class RegisterViewmodel extends BaseViewModel {
     } on Exception catch (e) {
       print("Exception: ${e.toString()}");
       return <String, dynamic>{
-        // Use <String, dynamic> instead of {}
         'CodeSent': false
       };
     }
