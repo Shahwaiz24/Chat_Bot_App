@@ -1,5 +1,5 @@
-import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
 import 'package:chat_bot/Splash View/starting_view.dart';
+import 'package:chat_bot/Verifying%20View/verifying_view.dart';
 import 'package:chat_bot/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';

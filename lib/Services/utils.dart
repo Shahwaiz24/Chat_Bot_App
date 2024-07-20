@@ -8,4 +8,5 @@ class Utils {
   static Color Pink = Color(0xffB384FF);
   static Color WhiteButton = Color(0xff2E2E2E);
   static Color Black = Color(0xff000000);
+  static Color VerificationColor = Color(0xffA7A7A7);
 }
