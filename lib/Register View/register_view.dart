@@ -176,20 +176,22 @@ class _RegisterViewState extends State<RegisterView> {
                                   if (credential['CodeSent'] == true) {
                                     isSentOtp = false;
                                     viewModel.stateRebuild();
-                                   await Future.delayed(Duration(milliseconds: 500));
+                                    await Future.delayed(
+                                        Duration(milliseconds: 500));
                                     Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                            child: GetOtpView(
-                                                verificationId: credential[
-                                                    'verificationId']),
-                                            type:
-                                                PageTransitionType.bottomToTop,
-                                            duration: Duration(seconds: 2)));
+                                      context,
+                                      PageTransition(
+                                        child: GetOtpView(
+                                            verificationId:
+                                                credential['verificationId']),
+                                        type: PageTransitionType.bottomToTop,
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
                                     PhoneNumberController.clear();
                                   } else if (credential['CodeSent'] == false) {
-                                         isSentOtp = false;
-                                         isError = true;
+                                    isSentOtp = false;
+                                    isError = true;
                                     viewModel.stateRebuild();
                                     PhoneNumberController.clear();
                                   }
