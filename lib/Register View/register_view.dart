@@ -9,6 +9,9 @@ import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 bool isSentOtp = false;
+bool OTPSent = false;
+String? verfyId;
+
 bool isError = false;
 
 class RegisterView extends StatefulWidget {
@@ -168,12 +171,15 @@ class _RegisterViewState extends State<RegisterView> {
                                   isSentOtp = true;
                                   isError = false;
                                   viewModel.stateRebuild();
-                                  Map<String, dynamic> credential =
-                                      await viewModel.OtpSent(
-                                    CountryCode: selectedCountryCode,
-                                    phoneNumber: PhoneNumberController.text,
-                                  );
-                                  if (credential['CodeSent'] == true) {
+
+                                  await viewModel.SentingOtp(
+                                      phoneNumber: PhoneNumberController.text,
+                                      CountryCode: selectedCountryCode);
+
+                                  print(
+                                      "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
+
+                                  if (OTPSent == true && verfyId != null) {
                                     isSentOtp = false;
                                     viewModel.stateRebuild();
                                     await Future.delayed(
@@ -182,19 +188,34 @@ class _RegisterViewState extends State<RegisterView> {
                                       context,
                                       PageTransition(
                                         child: GetOtpView(
-                                            verificationId:
-                                                credential['verificationId']),
+                                            verificationId: verfyId!),
                                         type: PageTransitionType.bottomToTop,
                                         duration: Duration(seconds: 2),
                                       ),
                                     );
                                     PhoneNumberController.clear();
-                                  } else if (credential['CodeSent'] == false) {
+                                  } else if (isError == true) {
                                     isSentOtp = false;
-                                    isError = true;
                                     viewModel.stateRebuild();
                                     PhoneNumberController.clear();
                                   }
+
+                                  // Map<String, dynamic> credential =
+                                  //     await viewModel.SentingOtp(
+                                  //   CountryCode: selectedCountryCode,
+                                  //   phoneNumber: PhoneNumberController.text,
+                                  // );
+                                  // if (credential['CodeSent'] == true) {
+                                  //   isSentOtp = false;
+                                  //   viewModel.stateRebuild();
+
+                                  //   PhoneNumberController.clear();
+                                  // } else if (credential['CodeSent'] == false) {
+                                  //   isSentOtp = false;
+                                  //   isError = true;
+                                  //   viewModel.stateRebuild();
+                                  //   PhoneNumberController.clear();
+                                  // }
                                 },
                                 screenHeight: screenHeight,
                                 screenWidth: screenWidth,

@@ -1,3 +1,4 @@
+import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
 
@@ -6,12 +7,8 @@ class RegisterViewmodel extends BaseViewModel {
     rebuildUi();
   }
 
-  Future<Map<String, dynamic>> OtpSent(
+  Future<void> SentingOtp(
       {required String phoneNumber, required String CountryCode}) async {
-    String? verfyId;
-    bool isCodeSent = false;
-    print(phoneNumber);
-
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {
@@ -19,12 +16,13 @@ class RegisterViewmodel extends BaseViewModel {
         },
         verificationFailed: (FirebaseAuthException exception) {
           print("exception: ${exception.toString()}");
+          isError = true;
         },
         codeSent: (String verificationId, int? token) {
           print('PhoneNumber: $phoneNumber');
           // Set verificationId here
           verfyId = verificationId;
-          isCodeSent = true;
+          OTPSent = true;
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           // This callback will be called when auto-retrieval times out
@@ -32,16 +30,12 @@ class RegisterViewmodel extends BaseViewModel {
         },
         phoneNumber: "${CountryCode}${phoneNumber}",
       );
-
-      if (isCodeSent && verfyId != null) {
-        return <String, dynamic>{'CodeSent': true, 'verificationId': verfyId};
-      } else {
-        return <String, dynamic>{'CodeSent': false};
-      }
-    } on Exception catch (e) {
+    } on FirebaseAuthException catch (exception) {
+      print("FirebaseAuthException: ${exception.toString()}");
+      isError = true;
+    } catch (e) {
       print("Exception: ${e.toString()}");
-      return <String, dynamic>{'CodeSent': false};
+      isError = true;
     }
   }
-
 }
