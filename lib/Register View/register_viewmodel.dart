@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:chat_bot/Register%20View/register_view.dart';
+import 'package:Atom/Register%20View/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
 

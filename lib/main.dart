@@ -1,7 +1,6 @@
-import 'package:chat_bot/Services/local_storage.dart';
-import 'package:chat_bot/Splash View/starting_view.dart';
-import 'package:chat_bot/Verifying%20View/verifying_view.dart';
-import 'package:chat_bot/firebase_options.dart';
+import 'package:Atom/Services/local_storage.dart';
+import 'package:Atom/Splash View/starting_view.dart';
+import 'package:Atom/firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -21,7 +20,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(fontFamily: 'Chivo-Light'),
       debugShowCheckedModeBanner: false,
-      home: const VerifyingView(),
+      home: const StartingView(),
     );
   }
 }

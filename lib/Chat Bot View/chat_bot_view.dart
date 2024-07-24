@@ -1,10 +1,10 @@
-import 'package:chat_bot/Chat%20Bot%20View/chat_bot_viewmodel.dart';
-import 'package:chat_bot/Custom%20Widget/chat_message.dart';
-import 'package:chat_bot/Custom%20Widget/textfields.dart';
-import 'package:chat_bot/Services/chat_services.dart';
-import 'package:chat_bot/Services/local_storage.dart';
-import 'package:chat_bot/Services/utils.dart';
-import 'package:chat_bot/Splash%20View/starting_view.dart';
+import 'package:Atom/Chat%20Bot%20View/chat_bot_viewmodel.dart';
+import 'package:Atom/Custom%20Widget/chat_message.dart';
+import 'package:Atom/Custom%20Widget/textfields.dart';
+import 'package:Atom/Services/chat_services.dart';
+import 'package:Atom/Services/local_storage.dart';
+import 'package:Atom/Services/utils.dart';
+import 'package:Atom/Splash%20View/starting_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';

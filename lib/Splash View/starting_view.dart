@@ -1,10 +1,10 @@
 // ignore_for_file: unused_local_variable
 
-import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
-import 'package:chat_bot/Services/local_storage.dart';
-import 'package:chat_bot/Services/utils.dart';
-import 'package:chat_bot/Register%20View/register_view.dart';
-import 'package:chat_bot/Splash%20View/starting_viewModel.dart';
+import 'package:Atom/Chat%20Bot%20View/chat_bot_view.dart';
+import 'package:Atom/Services/local_storage.dart';
+import 'package:Atom/Services/utils.dart';
+import 'package:Atom/Register%20View/register_view.dart';
+import 'package:Atom/Splash%20View/starting_viewModel.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';

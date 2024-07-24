@@ -1,9 +1,8 @@
-import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
-import 'package:chat_bot/Custom%20Widget/button.dart';
-import 'package:chat_bot/Custom%20Widget/textfields.dart';
-import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_viewmodel.dart';
-import 'package:chat_bot/Services/utils.dart';
-import 'package:chat_bot/Verifying%20View/verifying_view.dart';
+import 'package:Atom/Custom%20Widget/button.dart';
+import 'package:Atom/Custom%20Widget/textfields.dart';
+import 'package:Atom/Register%20View/Get%20Number%20Code/get_otp_viewmodel.dart';
+import 'package:Atom/Services/utils.dart';
+import 'package:Atom/Verifying%20View/verifying_view.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';

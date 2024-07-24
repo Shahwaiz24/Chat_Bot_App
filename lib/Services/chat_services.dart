@@ -1,4 +1,4 @@
-import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
+import 'package:Atom/Chat%20Bot%20View/chat_bot_view.dart';
 
 class ChatModel {
   ChatModel({

@@ -1,10 +1,7 @@
-import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
-import 'package:chat_bot/Register%20View/register_view.dart';
-import 'package:chat_bot/Services/chat_services.dart';
-import 'package:chat_bot/Services/utils.dart';
+
+import 'package:Atom/Services/utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:http/retry.dart';
+
 
 String selectedCountryCode = '';
 

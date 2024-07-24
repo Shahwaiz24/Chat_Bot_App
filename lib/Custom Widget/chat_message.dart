@@ -1,5 +1,5 @@
-import 'package:chat_bot/Services/chat_services.dart';
-import 'package:chat_bot/Services/utils.dart';
+import 'package:Atom/Services/chat_services.dart';
+import 'package:Atom/Services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:typewritertext/typewritertext.dart';
 
