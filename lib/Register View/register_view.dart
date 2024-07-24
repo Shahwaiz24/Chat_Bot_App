@@ -174,73 +174,76 @@ class _RegisterViewState extends State<RegisterView> {
                                   isSentOtp = true;
                                   isError = false;
                                   viewModel.stateRebuild();
-                                  await FirebaseAuth.instance.verifyPhoneNumber(
-                                    verificationCompleted: (PhoneAuthCredential
-                                        phoneAuthCredential) {
-                                      print(phoneAuthCredential.toString());
-                                    },
-                                    verificationFailed:
-                                        (FirebaseAuthException exception) {
-                                      print(
-                                          "exception: ${exception.toString()}");
-                                      isError = true;
-                                      viewModel.stateRebuild();
-                                    },
-                                    codeSent:
-                                        (String verificationId, int? token) {
-                                      log('PhoneNumber: ${PhoneNumberController.text}');
-                                      // Set verificationId here
-                                      verfyId = verificationId;
-                                      Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                          child: GetOtpView(
-                                              verificationId: verificationId),
-                                          type: PageTransitionType.bottomToTop,
-                                          duration: Duration(seconds: 2),
-                                        ),
-                                      );
-                                      PhoneNumberController.clear();
-                                    },
-                                    codeAutoRetrievalTimeout:
-                                        (String verificationId) {
-                                      // This callback will be called when auto-retrieval times out
-                                      print(
-                                          'codeAutoRetrievalTimeout: $verificationId');
-                                    },
-                                    phoneNumber:
-                                        "${selectedCountryCode}${PhoneNumberController.text}",
-                                  );
+                                  // await FirebaseAuth.instance.verifyPhoneNumber(
+                                  //   verificationCompleted: (PhoneAuthCredential
+                                  //       phoneAuthCredential) {
+                                  //     print(phoneAuthCredential.toString());
+                                  //   },
+                                  //   verificationFailed:
+                                  //       (FirebaseAuthException exception) {
+                                  //     print(
+                                  //         "exception: ${exception.toString()}");
+                                  //     isError = true;
+                                  //     viewModel.stateRebuild();
+                                  //   },
+                                  //   codeSent:
+                                  //       (String verificationId, int? token) {
+                                  //     log('PhoneNumber: ${PhoneNumberController.text}');
+                                  //     // Set verificationId here
+                                  //     verfyId = verificationId;
+                                  //     Navigator.pushReplacement(
+                                  //       context,
+                                  //       PageTransition(
+                                  //         child: GetOtpView(
+                                  //             verificationId: verificationId),
+                                  //         type: PageTransitionType.bottomToTop,
+                                  //         duration: Duration(seconds: 2),
+                                  //       ),
+                                  //     );
+                                  //     PhoneNumberController.clear();
+                                  //   },
+                                  //   codeAutoRetrievalTimeout:
+                                  //       (String verificationId) {
+                                  //     // This callback will be called when auto-retrieval times out
+                                  //     print(
+                                  //         'codeAutoRetrievalTimeout: $verificationId');
+                                  //   },
+                                  //   phoneNumber:
+                                  //       "${selectedCountryCode}${PhoneNumberController.text}",
+                                  // );
 
-                                  // bool CodeSent = await viewModel.SentingOtp(
-                                  //     phoneNumber: PhoneNumberController.text,
-                                  //     CountryCode: selectedCountryCode);
-                                  // print(
-                                  //     "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
+                                  Future<bool> CodeSent =
+                                      (await viewModel.SentingOtp(
+                                              phoneNumber:
+                                                  PhoneNumberController.text,
+                                              CountryCode: selectedCountryCode))
+                                          as Future<bool>;
+                                  print(
+                                      "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
                                   // await Future.delayed(Duration(seconds: 2));
 
-                                  // if (CodeSent == true) {
-                                  //   isSentOtp = false;
-                                  //   viewModel.stateRebuild();
-                                  //   await Future.delayed(
-                                  //       Duration(milliseconds: 500));
+                                  if (CodeSent == true) {
+                                    // isSentOtp = false;
+                                    // viewModel.stateRebuild();
+                                    await Future.delayed(
+                                        Duration(milliseconds: 500));
 
-                                  //   Navigator.pushReplacement(
-                                  //     context,
-                                  //     PageTransition(
-                                  //       child: GetOtpView(
-                                  //           verificationId: verfyId!),
-                                  //       type: PageTransitionType.bottomToTop,
-                                  //       duration: Duration(seconds: 2),
-                                  //     ),
-                                  //   );
-                                  //   PhoneNumberController.clear();
-                                  // } else if (CodeSent == false) {
-                                  //   isSentOtp = false;
-                                  //   isError = true;
-                                  //   viewModel.stateRebuild();
-                                  //   PhoneNumberController.clear();
-                                  // }
+                                    Navigator.pushReplacement(
+                                      context,
+                                      PageTransition(
+                                        child: GetOtpView(
+                                            verificationId: verfyId!),
+                                        type: PageTransitionType.bottomToTop,
+                                        duration: Duration(seconds: 2),
+                                      ),
+                                    );
+                                    PhoneNumberController.clear();
+                                  } else if (CodeSent == false) {
+                                    isSentOtp = false;
+                                    isError = true;
+                                    viewModel.stateRebuild();
+                                    PhoneNumberController.clear();
+                                  }
 
                                   // Map<String, dynamic> credential =
                                   //     await viewModel.SentingOtp(
