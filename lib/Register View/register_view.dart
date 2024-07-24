@@ -171,6 +171,10 @@ class _RegisterViewState extends State<RegisterView> {
                               child: Button(
                                 text: 'Send Code',
                                 ontap: () async {
+
+                                  // Ignore This Code please Because WhenEver i write an OTP sending Function in ViewModel its always Return false and return error
+
+                                  
                                   isSentOtp = true;
                                   isError = false;
                                   viewModel.stateRebuild();
@@ -212,55 +216,7 @@ class _RegisterViewState extends State<RegisterView> {
                                         "${selectedCountryCode}${PhoneNumberController.text}",
                                   );
 
-                                  // Future<bool> CodeSent =
-                                  //     (await viewModel.SentingOtp(
-                                  //             phoneNumber:
-                                  //                 PhoneNumberController.text,
-                                  //             CountryCode: selectedCountryCode))
-                                  //         as Future<bool>;
-                                  // print(
-                                  //     "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
-                                  // // await Future.delayed(Duration(seconds: 2));
-
-                                  // if (CodeSent == true) {
-                                  //   // isSentOtp = false;
-                                  //   // viewModel.stateRebuild();
-                                  //   await Future.delayed(
-                                  //       Duration(milliseconds: 500));
-
-                                  //   Navigator.pushReplacement(
-                                  //     context,
-                                  //     PageTransition(
-                                  //       child: GetOtpView(
-                                  //           verificationId: verfyId!),
-                                  //       type: PageTransitionType.bottomToTop,
-                                  //       duration: Duration(seconds: 2),
-                                  //     ),
-                                  //   );
-                                  //   PhoneNumberController.clear();
-                                  // } else if (CodeSent == false) {
-                                  //   isSentOtp = false;
-                                  //   isError = true;
-                                  //   viewModel.stateRebuild();
-                                  //   PhoneNumberController.clear();
-                                  // }
-
-                                  // // Map<String, dynamic> credential =
-                                  //     await viewModel.SentingOtp(
-                                  //   CountryCode: selectedCountryCode,
-                                  //   phoneNumber: PhoneNumberController.text,
-                                  // );
-                                  // if (credential['CodeSent'] == true) {
-                                  //   isSentOtp = false;
-                                  //   viewModel.stateRebuild();
-
-                                  //   PhoneNumberController.clear();
-                                  // } else if (credential['CodeSent'] == false) {
-                                  //   isSentOtp = false;
-                                  //   isError = true;
-                                  //   viewModel.stateRebuild();
-                                  //   PhoneNumberController.clear();
-                                  // }
+                                 
                                 },
                                 screenHeight: screenHeight,
                                 screenWidth: screenWidth,
