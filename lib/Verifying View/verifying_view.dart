@@ -2,7 +2,6 @@ import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Verifying%20View/verifying_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
@@ -26,6 +25,19 @@ class _VerifyingViewState extends State<VerifyingView> {
           viewmodel.verification();
         },
         builder: (context, viewModel, child) {
+          if (viewModel.loading == 100) {
+            // Delay the navigation until the build phase is complete
+            Future.delayed(Duration(seconds: 2), () {
+              Navigator.pushReplacement(
+                context,
+                PageTransition(
+                  child: ChatBotView(),
+                  duration: Duration(seconds: 2),
+                  type: PageTransitionType.bottomToTop,
+                ),
+              );
+            });
+          }
           return Scaffold(
               backgroundColor: Utils.backgroundColor,
               body: Stack(
@@ -82,8 +94,6 @@ class _VerifyingViewState extends State<VerifyingView> {
                               fontWeight: FontWeight.bold,
                               fontSize: screenHeight * 0.020),
                         ),
-                      
-                     
                       ],
                     ),
                   )

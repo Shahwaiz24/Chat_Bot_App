@@ -3,6 +3,7 @@ import 'package:chat_bot/Custom%20Widget/chat_message.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Services/chat_services.dart';
 import 'package:chat_bot/Services/utils.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:stacked/stacked.dart';
@@ -75,6 +76,7 @@ class _ChatBotViewState extends State<ChatBotView> {
                                 child: ListView.builder(
                                     itemCount: chats.length,
                                     controller: _controller,
+                                    dragStartBehavior: DragStartBehavior.down,
                                     itemBuilder: (context, index) {
                                       return ChatMessage(
                                         userChat: chats[index].userChat,
