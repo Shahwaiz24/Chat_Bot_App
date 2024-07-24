@@ -172,18 +172,19 @@ class _RegisterViewState extends State<RegisterView> {
                                   isError = false;
                                   viewModel.stateRebuild();
 
-                                  await viewModel.SentingOtp(
+                                  bool CodeSent = await viewModel.SentingOtp(
                                       phoneNumber: PhoneNumberController.text,
                                       CountryCode: selectedCountryCode);
-
                                   print(
                                       "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
+                                  await Future.delayed(Duration(seconds: 2));
 
-                                  if (OTPSent == true && verfyId != null) {
+                                  if (CodeSent == true) {
                                     isSentOtp = false;
                                     viewModel.stateRebuild();
                                     await Future.delayed(
                                         Duration(milliseconds: 500));
+
                                     Navigator.pushReplacement(
                                       context,
                                       PageTransition(
@@ -194,8 +195,9 @@ class _RegisterViewState extends State<RegisterView> {
                                       ),
                                     );
                                     PhoneNumberController.clear();
-                                  } else if (isError == true) {
+                                  } else if (CodeSent == false) {
                                     isSentOtp = false;
+                                    isError = true;
                                     viewModel.stateRebuild();
                                     PhoneNumberController.clear();
                                   }

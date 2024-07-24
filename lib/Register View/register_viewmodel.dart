@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:stacked/stacked.dart';
@@ -7,8 +9,10 @@ class RegisterViewmodel extends BaseViewModel {
     rebuildUi();
   }
 
-  Future<void> SentingOtp(
+  Future<bool> SentingOtp(
       {required String phoneNumber, required String CountryCode}) async {
+    bool isCodeSented = false;
+
     try {
       await FirebaseAuth.instance.verifyPhoneNumber(
         verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {
@@ -16,13 +20,13 @@ class RegisterViewmodel extends BaseViewModel {
         },
         verificationFailed: (FirebaseAuthException exception) {
           print("exception: ${exception.toString()}");
-          isError = true;
+          // isError = true;
         },
         codeSent: (String verificationId, int? token) {
-          print('PhoneNumber: $phoneNumber');
+          log('PhoneNumber: $phoneNumber');
           // Set verificationId here
           verfyId = verificationId;
-          OTPSent = true;
+          isCodeSented = true;
         },
         codeAutoRetrievalTimeout: (String verificationId) {
           // This callback will be called when auto-retrieval times out
@@ -30,12 +34,17 @@ class RegisterViewmodel extends BaseViewModel {
         },
         phoneNumber: "${CountryCode}${phoneNumber}",
       );
+      if (isCodeSented == true) {
+        return true;
+      } else {
+        return false;
+      }
     } on FirebaseAuthException catch (exception) {
       print("FirebaseAuthException: ${exception.toString()}");
-      isError = true;
+      return false;
     } catch (e) {
       print("Exception: ${e.toString()}");
-      isError = true;
+      return false;
     }
   }
 }
