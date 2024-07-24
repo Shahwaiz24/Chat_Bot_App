@@ -12,7 +12,7 @@ import 'package:stacked/stacked.dart';
 bool isError = false;
 bool isloading = false;
 List<String> CountryCode = [];
-bool? checkLogin;
+Future<bool>? checkLogin;
 
 class StartingView extends StatefulWidget {
   const StartingView({super.key});

@@ -10,7 +10,7 @@ class LocalStorage {
     await prefs.setBool('UserLogined', true);
   }
 
-  static checkLogin() async {
+  static Future<bool> checkLogin() async {
     bool? checkLogin = await prefs.getBool('UserLogined');
     if (checkLogin == true) {
       return true;
