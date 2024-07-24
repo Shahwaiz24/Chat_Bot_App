@@ -2,10 +2,13 @@ import 'package:chat_bot/Chat%20Bot%20View/chat_bot_viewmodel.dart';
 import 'package:chat_bot/Custom%20Widget/chat_message.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Services/chat_services.dart';
+import 'package:chat_bot/Services/local_storage.dart';
 import 'package:chat_bot/Services/utils.dart';
+import 'package:chat_bot/Splash%20View/starting_view.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 bool isView = false;
@@ -55,6 +58,28 @@ class _ChatBotViewState extends State<ChatBotView> {
                   child: const Image(
                     image: AssetImage('assets/images/background_2.png'),
                     fit: BoxFit.cover,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Padding(
+                    padding: EdgeInsets.only(
+                        top: screenHeight * 0.065, right: screenHeight * 0.020),
+                    child: InkWell(
+                      onTap: () {
+                        LocalStorage.logoutSave();
+                        Navigator.pushReplacement(
+                            context,
+                            PageTransition(
+                                child: StartingView(),
+                                type: PageTransitionType.bottomToTop));
+                      },
+                      child: Icon(
+                        Icons.exit_to_app_outlined,
+                        color: Utils.TextColor,
+                        size: screenHeight * 0.040,
+                      ),
+                    ),
                   ),
                 ),
                 Align(

@@ -1,4 +1,5 @@
 import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
+import 'package:chat_bot/Services/local_storage.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Verifying%20View/verifying_viewmodel.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +29,7 @@ class _VerifyingViewState extends State<VerifyingView> {
           if (viewModel.loading == 100) {
             // Delay the navigation until the build phase is complete
             Future.delayed(Duration(seconds: 2), () {
+              LocalStorage.loginSave();
               Navigator.pushReplacement(
                 context,
                 PageTransition(

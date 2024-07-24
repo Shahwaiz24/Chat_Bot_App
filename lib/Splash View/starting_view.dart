@@ -1,5 +1,7 @@
 // ignore_for_file: unused_local_variable
 
+import 'package:chat_bot/Chat%20Bot%20View/chat_bot_view.dart';
+import 'package:chat_bot/Services/local_storage.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Register%20View/register_view.dart';
 import 'package:chat_bot/Splash%20View/starting_viewModel.dart';
@@ -10,6 +12,7 @@ import 'package:stacked/stacked.dart';
 bool isError = false;
 bool isloading = false;
 List<String> CountryCode = [];
+bool? checkLogin;
 
 class StartingView extends StatefulWidget {
   const StartingView({super.key});
@@ -27,6 +30,9 @@ class _StartingViewState extends State<StartingView> {
 
     return ViewModelBuilder<StartingViewmodel>.reactive(
       viewModelBuilder: () => StartingViewmodel(),
+      onViewModelReady: (viewModel) {
+        checkLogin = LocalStorage.checkLogin();
+      },
       builder: (context, viewModel, child) {
         return Scaffold(
           body: Stack(
@@ -142,6 +148,35 @@ class _StartingViewState extends State<StartingView> {
                                 } else {
                                   print(CountryCode);
                                   print(CountryCode.length);
+                                  if(checkLogin == false){
+                                    Navigator.push(
+                                        context,
+                                        PageTransition(
+                                            type:
+                                                PageTransitionType.bottomToTop,
+                                            child: RegisterView(
+                                              CountryCodes: CountryCode,
+                                            ),
+                                            duration: Duration(seconds: 2)));
+                                    PhoneNumberController.clear();
+
+                                  }
+                                  else{
+                                        Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            type:
+                                                PageTransitionType.bottomToTop,
+                                            child: const ChatBotView(
+                                            ),
+                                            duration: Duration(seconds: 2)));
+                                    PhoneNumberController.clear();
+                                  }
+
+                                  
+                                }
+                              } else {
+                              if (checkLogin == false) {
                                   Navigator.push(
                                       context,
                                       PageTransition(
@@ -151,17 +186,15 @@ class _StartingViewState extends State<StartingView> {
                                           ),
                                           duration: Duration(seconds: 2)));
                                   PhoneNumberController.clear();
+                                } else {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.bottomToTop,
+                                          child: const ChatBotView(),
+                                          duration: Duration(seconds: 2)));
+                                  PhoneNumberController.clear();
                                 }
-                              } else {
-                                Navigator.push(
-                                    context,
-                                    PageTransition(
-                                        type: PageTransitionType.bottomToTop,
-                                        child: RegisterView(
-                                          CountryCodes: CountryCode,
-                                        ),
-                                        duration: Duration(seconds: 2)));
-                                PhoneNumberController.clear();
                               }
                             },
                             child: Container(

@@ -1,3 +1,4 @@
+import 'package:chat_bot/Services/local_storage.dart';
 import 'package:chat_bot/Splash View/starting_view.dart';
 import 'package:chat_bot/Verifying%20View/verifying_view.dart';
 import 'package:chat_bot/firebase_options.dart';
@@ -7,6 +8,7 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await LocalStorage.initialize();
   runApp(const MyApp());
 }
 
