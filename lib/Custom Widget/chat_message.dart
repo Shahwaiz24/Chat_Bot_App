@@ -40,8 +40,8 @@ class _ChatMessageState extends State<ChatMessage> {
                 bottomRight: const Radius.circular(10),
               ),
               color: widget.userChat == true
-                  ? const Color(0xffEFF4FF)
-                  : Colors.red,
+                  ? Color.fromARGB(255, 226, 230, 243)
+                  : Colors.grey.withOpacity(0.7),
             ),
             child: widget.userChat == true
                 ? Text(
