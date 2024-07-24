@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:chat_bot/Custom%20Widget/button.dart';
 import 'package:chat_bot/Custom%20Widget/textfields.dart';
 import 'package:chat_bot/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:chat_bot/Services/utils.dart';
 import 'package:chat_bot/Register%20View/register_viewmodel.dart';
 import 'package:chat_bot/Splash%20View/starting_view.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
@@ -171,36 +174,73 @@ class _RegisterViewState extends State<RegisterView> {
                                   isSentOtp = true;
                                   isError = false;
                                   viewModel.stateRebuild();
+                                  await FirebaseAuth.instance.verifyPhoneNumber(
+                                    verificationCompleted: (PhoneAuthCredential
+                                        phoneAuthCredential) {
+                                      print(phoneAuthCredential.toString());
+                                    },
+                                    verificationFailed:
+                                        (FirebaseAuthException exception) {
+                                      print(
+                                          "exception: ${exception.toString()}");
+                                      isError = true;
+                                      viewModel.stateRebuild();
+                                    },
+                                    codeSent:
+                                        (String verificationId, int? token) {
+                                      log('PhoneNumber: ${PhoneNumberController.text}');
+                                      // Set verificationId here
+                                      verfyId = verificationId;
+                                      Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                          child: GetOtpView(
+                                              verificationId: verificationId),
+                                          type: PageTransitionType.bottomToTop,
+                                          duration: Duration(seconds: 2),
+                                        ),
+                                      );
+                                      PhoneNumberController.clear();
+                                    },
+                                    codeAutoRetrievalTimeout:
+                                        (String verificationId) {
+                                      // This callback will be called when auto-retrieval times out
+                                      print(
+                                          'codeAutoRetrievalTimeout: $verificationId');
+                                    },
+                                    phoneNumber:
+                                        "${selectedCountryCode}${PhoneNumberController.text}",
+                                  );
 
-                                  bool CodeSent = await viewModel.SentingOtp(
-                                      phoneNumber: PhoneNumberController.text,
-                                      CountryCode: selectedCountryCode);
-                                  print(
-                                      "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
-                                  await Future.delayed(Duration(seconds: 2));
+                                  // bool CodeSent = await viewModel.SentingOtp(
+                                  //     phoneNumber: PhoneNumberController.text,
+                                  //     CountryCode: selectedCountryCode);
+                                  // print(
+                                  //     "OTPSent: $OTPSent, verfyId: $verfyId, isError: $isError");
+                                  // await Future.delayed(Duration(seconds: 2));
 
-                                  if (CodeSent == true) {
-                                    isSentOtp = false;
-                                    viewModel.stateRebuild();
-                                    await Future.delayed(
-                                        Duration(milliseconds: 500));
+                                  // if (CodeSent == true) {
+                                  //   isSentOtp = false;
+                                  //   viewModel.stateRebuild();
+                                  //   await Future.delayed(
+                                  //       Duration(milliseconds: 500));
 
-                                    Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                        child: GetOtpView(
-                                            verificationId: verfyId!),
-                                        type: PageTransitionType.bottomToTop,
-                                        duration: Duration(seconds: 2),
-                                      ),
-                                    );
-                                    PhoneNumberController.clear();
-                                  } else if (CodeSent == false) {
-                                    isSentOtp = false;
-                                    isError = true;
-                                    viewModel.stateRebuild();
-                                    PhoneNumberController.clear();
-                                  }
+                                  //   Navigator.pushReplacement(
+                                  //     context,
+                                  //     PageTransition(
+                                  //       child: GetOtpView(
+                                  //           verificationId: verfyId!),
+                                  //       type: PageTransitionType.bottomToTop,
+                                  //       duration: Duration(seconds: 2),
+                                  //     ),
+                                  //   );
+                                  //   PhoneNumberController.clear();
+                                  // } else if (CodeSent == false) {
+                                  //   isSentOtp = false;
+                                  //   isError = true;
+                                  //   viewModel.stateRebuild();
+                                  //   PhoneNumberController.clear();
+                                  // }
 
                                   // Map<String, dynamic> credential =
                                   //     await viewModel.SentingOtp(
