@@ -148,7 +148,16 @@ class _StartingViewState extends State<StartingView> {
                                 } else {
                                   print(CountryCode);
                                   print(CountryCode.length);
-                                  if(checkLogin == false){
+                                  if (checkLogin == true) {
+                                    Navigator.pushReplacement(
+                                        context,
+                                        PageTransition(
+                                            type:
+                                                PageTransitionType.bottomToTop,
+                                            child: ChatBotView(),
+                                            duration: Duration(seconds: 2)));
+                                    PhoneNumberController.clear();
+                                  } else {
                                     Navigator.push(
                                         context,
                                         PageTransition(
@@ -159,24 +168,18 @@ class _StartingViewState extends State<StartingView> {
                                             ),
                                             duration: Duration(seconds: 2)));
                                     PhoneNumberController.clear();
-
                                   }
-                                  else{
-                                        Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                            type:
-                                                PageTransitionType.bottomToTop,
-                                            child: const ChatBotView(
-                                            ),
-                                            duration: Duration(seconds: 2)));
-                                    PhoneNumberController.clear();
-                                  }
-
-                                  
                                 }
                               } else {
-                              if (checkLogin == false) {
+                                if (checkLogin == true) {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      PageTransition(
+                                          type: PageTransitionType.bottomToTop,
+                                          child: ChatBotView(),
+                                          duration: Duration(seconds: 2)));
+                                  PhoneNumberController.clear();
+                                } else {
                                   Navigator.push(
                                       context,
                                       PageTransition(
@@ -184,14 +187,6 @@ class _StartingViewState extends State<StartingView> {
                                           child: RegisterView(
                                             CountryCodes: CountryCode,
                                           ),
-                                          duration: Duration(seconds: 2)));
-                                  PhoneNumberController.clear();
-                                } else {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.bottomToTop,
-                                          child: const ChatBotView(),
                                           duration: Duration(seconds: 2)));
                                   PhoneNumberController.clear();
                                 }
