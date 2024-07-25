@@ -29,7 +29,7 @@ class _VerifyingViewState extends State<VerifyingView> {
           if (viewModel.loading == 100) {
             // Delay the navigation until the build phase is complete
             Future.delayed(Duration(seconds: 2), () {
-              LocalStorage.loginSave();
+             
               Navigator.pushReplacement(
                 context,
                 PageTransition(

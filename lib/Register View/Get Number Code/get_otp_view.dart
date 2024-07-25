@@ -1,6 +1,7 @@
 import 'package:Atom/Custom%20Widget/button.dart';
 import 'package:Atom/Custom%20Widget/textfields.dart';
 import 'package:Atom/Register%20View/Get%20Number%20Code/get_otp_viewmodel.dart';
+import 'package:Atom/Services/local_storage.dart';
 import 'package:Atom/Services/utils.dart';
 import 'package:Atom/Verifying%20View/verifying_view.dart';
 import 'package:flutter/material.dart';
@@ -150,6 +151,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                                       viewmodel.stateRebuild();
                                       await Future.delayed(
                                           Duration(milliseconds: 500));
+                                           await LocalStorage.loginSave();
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(
