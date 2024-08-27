@@ -28,14 +28,6 @@ class _ChatBotViewState extends State<ChatBotView> {
   @override
   void initState() {
     _controller = ScrollController();
-
-    SchedulerBinding.instance.addPostFrameCallback((_) {
-      _controller!.animateTo(
-        _controller!.position.maxScrollExtent,
-        duration: const Duration(milliseconds: 300),
-        curve: Curves.easeOut,
-      );
-    });
   }
 
   @override
@@ -178,6 +170,11 @@ class _ChatBotViewState extends State<ChatBotView> {
                                 Text: promptControlloer.text);
 
                             viewModel.stateRebuild();
+                            _controller!.animateTo(
+                              _controller!.position.maxScrollExtent,
+                              duration: const Duration(milliseconds: 300),
+                              curve: Curves.easeOut,
+                            );
                           },
                           child: Icon(
                             Icons.send_rounded,

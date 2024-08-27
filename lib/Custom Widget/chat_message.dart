@@ -2,7 +2,6 @@ import 'package:Atom/Services/chat_services.dart';
 import 'package:Atom/Services/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:typewritertext/typewritertext.dart';
-
 class ChatMessage extends StatefulWidget {
   ChatMessage({super.key, this.userChat = false, required this.chatData});
 
@@ -43,27 +42,36 @@ class _ChatMessageState extends State<ChatMessage> {
                   ? Color.fromARGB(255, 226, 230, 243)
                   : Colors.grey.withOpacity(0.7),
             ),
-            child: widget.userChat == true
+            child: widget.chatData.loading
                 ? Text(
-                    widget.chatData.chatContent,
+                    "...",
                     style: const TextStyle(
                       fontSize: 16,
+                      color: Colors.black,
                       fontWeight: FontWeight.bold,
                     ),
                   )
-                : Padding(
-                    padding: EdgeInsets.only(
-                        bottom: MediaQuery.of(context).size.height * 0.030),
-                    child: TypeWriter.text(
-                      style: TextStyle(
-                        color: Utils.Black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
+                : widget.userChat == true
+                    ? Text(
+                        widget.chatData.chatContent,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      )
+                    : Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).size.height * 0.030),
+                        child: TypeWriter.text(
+                          style: TextStyle(
+                            color: Utils.Black,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          widget.chatData.chatContent,
+                          duration: const Duration(milliseconds: 50),
+                        ),
                       ),
-                      widget.chatData.chatContent,
-                      duration: const Duration(milliseconds: 50),
-                    ),
-                  ),
           ),
         ),
       ],
