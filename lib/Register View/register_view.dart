@@ -188,6 +188,8 @@ class _RegisterViewState extends State<RegisterView> {
                                         print(
                                             "exception: ${exception.toString()}");
                                         isError = true;
+                                        isSentOtp = false;
+                                        PhoneNumberController.clear();
                                         viewModel.stateRebuild();
                                       },
                                       codeSent:
