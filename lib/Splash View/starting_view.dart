@@ -9,11 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
-bool isError = false;
-bool isloading = false;
-List<String> CountryCode = [];
-Future<bool>? checkLogin;
-
 class StartingView extends StatefulWidget {
   const StartingView({super.key});
 
@@ -30,14 +25,11 @@ class _StartingViewState extends State<StartingView> {
 
     return ViewModelBuilder<StartingViewmodel>.reactive(
       viewModelBuilder: () => StartingViewmodel(),
-      onViewModelReady: (viewModel) {
-        checkLogin = LocalStorage.checkLogin();
-      },
       builder: (context, viewModel, child) {
         return Scaffold(
           body: Stack(
             children: [
-              Positioned.fill(
+            const Positioned.fill(
                 child: Image(
                   image: AssetImage('assets/images/background.png'),
                   fit: BoxFit.cover,
@@ -85,14 +77,14 @@ class _StartingViewState extends State<StartingView> {
                           color: Utils.TextGreyColor,
                           fontSize: screenHeight * 0.016),
                     ),
-                    isError == true
+                    viewModel.isError == true
                         ? SizedBox(
                             height: screenHeight * 0.190,
                           )
                         : SizedBox(
                             height: screenHeight * 0.240,
                           ),
-                    isError == true
+                    viewModel.isError == true
                         ? Center(
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -120,7 +112,7 @@ class _StartingViewState extends State<StartingView> {
                                 fontSize: screenHeight * 0.018),
                           ),
                     // Button Container //
-                    isloading == true
+                    viewModel.isloading == true
                         ? Padding(
                             padding: EdgeInsets.only(
                                 top: screenHeight * 0.030,
@@ -132,65 +124,7 @@ class _StartingViewState extends State<StartingView> {
                           )
                         : InkWell(
                             onTap: () async {
-                              CountryCode.clear();
-                              isError = false;
-                              viewModel.stateRebuild();
-                              if (CountryCode == null || CountryCode.isEmpty) {
-                                isloading = true;
-                                viewModel.stateRebuild();
-                                CountryCode = await viewModel.getCode();
-                                isloading = false;
-                                viewModel.stateRebuild();
-
-                                if (CountryCode.contains('Error')) {
-                                  isError = true;
-                                  viewModel.stateRebuild();
-                                } else {
-                                  print(CountryCode);
-                                  print(CountryCode.length);
-                                  if (checkLogin == true) {
-                                    Navigator.pushReplacement(
-                                        context,
-                                        PageTransition(
-                                            type:
-                                                PageTransitionType.bottomToTop,
-                                            child: ChatBotView(),
-                                            duration: Duration(seconds: 2)));
-                                    PhoneNumberController.clear();
-                                  } else {
-                                    Navigator.push(
-                                        context,
-                                        PageTransition(
-                                            type:
-                                                PageTransitionType.bottomToTop,
-                                            child: RegisterView(
-                                              CountryCodes: CountryCode,
-                                            ),
-                                            duration: Duration(seconds: 2)));
-                                    PhoneNumberController.clear();
-                                  }
-                                }
-                              } else {
-                                if (checkLogin == true) {
-                                  Navigator.pushReplacement(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.bottomToTop,
-                                          child: ChatBotView(),
-                                          duration: Duration(seconds: 2)));
-                                  PhoneNumberController.clear();
-                                } else {
-                                  Navigator.push(
-                                      context,
-                                      PageTransition(
-                                          type: PageTransitionType.bottomToTop,
-                                          child: RegisterView(
-                                            CountryCodes: CountryCode,
-                                          ),
-                                          duration: Duration(seconds: 2)));
-                                  PhoneNumberController.clear();
-                                }
-                              }
+                            await  viewModel.getStatustAndCode(context: context);
                             },
                             child: Container(
                               height: screenHeight * 0.250,

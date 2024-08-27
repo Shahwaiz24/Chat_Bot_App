@@ -119,8 +119,8 @@ class _RegisterViewState extends State<RegisterView> {
                                 isCode: true,
                                 isChat: false,
                                 surfix: Text(''),
-                                initialCountryCode: CountryCode[1],
-                                countryCodes: CountryCode,
+                                initialCountryCode: widget.CountryCodes[1],
+                                countryCodes: widget.CountryCodes,
                                 backColor: Utils.Purple,
                                 Controller: PhoneNumberController,
                                 hintColor: Utils.TextColor,
@@ -217,11 +217,19 @@ class _RegisterViewState extends State<RegisterView> {
                                       phoneNumber:
                                           "${selectedCountryCode}${PhoneNumberController.text}",
                                     );
-                                  } on Exception catch (e) {
+                                  } on FirebaseAuthException catch (exception) {
                                     isError = true;
-                                     isSentOtp = false;
+                                    isSentOtp = false;
                                     PhoneNumberController.clear();
                                     viewModel.stateRebuild();
+                                    print(
+                                        "FirebaseAuthException: ${exception.toString()}");
+                                  } catch (e) {
+                                    isError = true;
+                                    isSentOtp = false;
+                                    PhoneNumberController.clear();
+                                    viewModel.stateRebuild();
+                                    print("Exception: ${e.toString()}");
                                   }
                                 },
                                 screenHeight: screenHeight,
