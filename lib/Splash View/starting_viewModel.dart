@@ -35,21 +35,19 @@ class StartingViewmodel extends BaseViewModel {
       isError = true;
       isloading = false;
       rebuildUi();
-    }
-    else{
-        bool checkLogin = await LocalStorage.checkLogin();
-        if(checkLogin == true){
-          isloading = false;
-           Navigator.pushReplacement(
+    } else {
+      bool checkLogin = await LocalStorage.checkLogin();
+      if (checkLogin == true) {
+        isloading = false;
+        Navigator.pushReplacement(
             context,
             PageTransition(
                 type: PageTransitionType.bottomToTop,
                 child: ChatBotView(),
                 duration: Duration(seconds: 2)));
         PhoneNumberController.clear();
-        }
-        else {
-                    isloading = false;
+      } else {
+        isloading = false;
 
         Navigator.push(
             context,

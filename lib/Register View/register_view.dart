@@ -5,7 +5,6 @@ import 'package:Atom/Custom%20Widget/textfields.dart';
 import 'package:Atom/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:Atom/Services/utils.dart';
 import 'package:Atom/Register%20View/register_viewmodel.dart';
-import 'package:Atom/Splash%20View/starting_view.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
