@@ -35,7 +35,7 @@ class RegisterViewmodel extends BaseViewModel {
             context,
             MaterialPageRoute(
                 builder: (context) =>
-                    GetOtpView(verificationId: GlobalData.otp)));
+                    GetOtpView(verifiedOtp: GlobalData.otp)));
       } else {
         isSentOtp = false;
         OTPSent = false;

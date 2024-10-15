@@ -8,13 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
-bool otpChecking = false;
-bool isOtperror = false;
-
 class GetOtpView extends StatefulWidget {
-  const GetOtpView({super.key, required this.verificationId});
+  const GetOtpView({super.key, required this.verifiedOtp});
 
-  final String verificationId;
+  final String verifiedOtp;
 
   @override
   State<GetOtpView> createState() => _GetOtpViewState();
@@ -63,7 +60,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                         ],
                       ),
                     ),
-                    child: otpChecking == true
+                    child: viewmodel.otpChecking == true
                         ? Center(
                             child: CircularProgressIndicator(
                               color: Utils.Purple,
@@ -101,7 +98,7 @@ class _GetOtpViewState extends State<GetOtpView> {
                                     screenHeight: screenHeight,
                                     screenWidth: screenWidth,
                                   )),
-                              isOtperror == true
+                              viewmodel.isOtperror == true
                                   ? Column(
                                       children: [
                                         SizedBox(
@@ -140,30 +137,10 @@ class _GetOtpViewState extends State<GetOtpView> {
                                 child: Button(
                                   text: 'Verify',
                                   ontap: () async {
-                                    otpChecking = true;
-                                    viewmodel.stateRebuild();
-                                    bool otpCheck = await viewmodel.otpCheck(
-                                        verificationId: widget.verificationId,
+                                    await viewmodel.otpCheck(
+                                        context: context,
+                                        otp: widget.verifiedOtp,
                                         enteredCode: OtpController.text);
-
-                                    if (otpCheck == true) {
-                                      otpChecking = false;
-                                      viewmodel.stateRebuild();
-                                      await Future.delayed(
-                                          Duration(milliseconds: 500));
-                                      await LocalStorage.loginSave();
-                                      Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                              child: VerifyingView(),
-                                              type: PageTransitionType
-                                                  .bottomToTop,
-                                              duration: Duration(seconds: 2)));
-                                    } else if (otpCheck == false) {
-                                      isOtperror = true;
-                                      otpChecking = false;
-                                      viewmodel.stateRebuild();
-                                    }
 
                                     OtpController.clear();
                                   },

@@ -14,7 +14,9 @@ class ApiService {
     try {
       var parsedUrl = Uri.parse(ApiService.otpUrl);
 
-      var response = await http.post(parsedUrl, body: body);
+      var response = await http.post(parsedUrl, body: body, headers: {
+        "Content-Type": "application/json",
+      });
 
       var responseBody = jsonDecode(response.body);
       if (responseBody['Status'] == "Success") {

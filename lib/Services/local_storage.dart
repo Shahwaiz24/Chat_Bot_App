@@ -20,6 +20,6 @@ class LocalStorage {
   }
 
   static logoutSave() async {
-    await prefs.setBool('UserLogined', false);
+    await prefs.clear();
   }
 }
