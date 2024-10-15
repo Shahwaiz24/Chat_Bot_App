@@ -10,12 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
-bool isSentOtp = false;
-bool OTPSent = false;
-String? verfyId;
-
-bool isError = false;
-
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key, required this.CountryCodes});
 
@@ -58,7 +52,7 @@ class _RegisterViewState extends State<RegisterView> {
                     SizedBox(width: screenWidth * 0.05),
                     InkWell(
                       onTap: () {
-                        isError = false;
+                        viewModel.isError = false;
                         Navigator.pop(context);
                       },
                       child: Icon(
@@ -89,7 +83,7 @@ class _RegisterViewState extends State<RegisterView> {
                       ],
                     ),
                   ),
-                  child: isSentOtp == true
+                  child: viewModel.isSentOtp == true
                       ? Center(
                           child: CircularProgressIndicator(
                             color: Utils.Purple,
@@ -128,7 +122,7 @@ class _RegisterViewState extends State<RegisterView> {
                                 screenWidth: screenWidth,
                               ),
                             ),
-                            isError == true
+                            viewModel.isError == true
                                 ? Column(
                                     children: [
                                       SizedBox(
@@ -170,68 +164,12 @@ class _RegisterViewState extends State<RegisterView> {
                               child: Button(
                                 text: 'Send Code',
                                 ontap: () async {
-                                  // Ignore This Code please Because WhenEver i write an OTP sending Function in ViewModel its always Return false and return error
-
-                                  try {
-                                    isSentOtp = true;
-                                    isError = false;
-                                    viewModel.stateRebuild();
-                                    await FirebaseAuth.instance
-                                        .verifyPhoneNumber(
-                                      verificationCompleted:
-                                          (PhoneAuthCredential
-                                              phoneAuthCredential) {
-                                        print(phoneAuthCredential.toString());
-                                      },
-                                      verificationFailed:
-                                          (FirebaseAuthException exception) {
-                                        print(
-                                            "exception: ${exception.toString()}");
-                                        isError = true;
-                                        isSentOtp = false;
-                                        PhoneNumberController.clear();
-                                        viewModel.stateRebuild();
-                                      },
-                                      codeSent:
-                                          (String verificationId, int? token) {
-                                        log('PhoneNumber: ${PhoneNumberController.text}');
-                                        // Set verificationId here
-                                        verfyId = verificationId;
-                                        Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                            child: GetOtpView(
-                                                verificationId: verificationId),
-                                            type:
-                                                PageTransitionType.bottomToTop,
-                                            duration: Duration(seconds: 2),
-                                          ),
-                                        );
-                                        PhoneNumberController.clear();
-                                      },
-                                      codeAutoRetrievalTimeout:
-                                          (String verificationId) {
-                                        // This callback will be called when auto-retrieval times out
-                                        print(
-                                            'codeAutoRetrievalTimeout: $verificationId');
-                                      },
-                                      phoneNumber:
-                                          "${selectedCountryCode}${PhoneNumberController.text}",
-                                    );
-                                  } on FirebaseAuthException catch (exception) {
-                                    isError = true;
-                                    isSentOtp = false;
-                                    PhoneNumberController.clear();
-                                    viewModel.stateRebuild();
-                                    print(
-                                        "FirebaseAuthException: ${exception.toString()}");
-                                  } catch (e) {
-                                    isError = true;
-                                    isSentOtp = false;
-                                    PhoneNumberController.clear();
-                                    viewModel.stateRebuild();
-                                    print("Exception: ${e.toString()}");
-                                  }
+                                  viewModel.sentingOtp(
+                                      phoneNumber: PhoneNumberController.text,
+                                      CountryCode: selectedCountryCode,
+                                      context: context);
+                                  PhoneNumberController.clear();
+                                  
                                 },
                                 screenHeight: screenHeight,
                                 screenWidth: screenWidth,

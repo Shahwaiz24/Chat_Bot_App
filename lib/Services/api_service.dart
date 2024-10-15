@@ -1,10 +1,36 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'package:Atom/Services/global_data.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
   static final String url = 'https://restcountries.com/v3.1/all';
+
+  static final String otpUrl =
+      "https://chat-bot-theta-nine.vercel.app/v1/api/send-otp";
+
+  static sendCode({required body}) async {
+    try {
+      var parsedUrl = Uri.parse(ApiService.otpUrl);
+
+      var response = await http.post(parsedUrl, body: body);
+
+      var responseBody = jsonDecode(response.body);
+      if (responseBody['Status'] == "Success") {
+        print("Body : ${responseBody}");
+        GlobalData.otp = responseBody['OTP'];
+        return true;
+      } else {
+        print("Body : ${responseBody}");
+
+        return false;
+      }
+    } catch (e) {
+      print("Body : ${e.toString()}");
+      return false;
+    }
+  }
 
   Future<List<String>> getapi({required List<String> code}) async {
     try {

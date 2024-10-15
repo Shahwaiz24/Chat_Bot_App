@@ -1,52 +1,59 @@
+import 'dart:convert';
 import 'dart:developer';
 
+import 'package:Atom/Register%20View/Get%20Number%20Code/get_otp_view.dart';
 import 'package:Atom/Register%20View/register_view.dart';
+import 'package:Atom/Services/api_service.dart';
+import 'package:Atom/Services/global_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class RegisterViewmodel extends BaseViewModel {
+  bool isSentOtp = false;
+  bool isError = false;
+  bool OTPSent = false;
   stateRebuild() {
     rebuildUi();
   }
 
-  Future<bool> SentingOtp(
-      {required String phoneNumber, required String CountryCode}) async {
-    bool isCodeSented = false;
-
+  sentingOtp(
+      {required String phoneNumber,
+      required String CountryCode,
+      required BuildContext context}) async {
     try {
-      await FirebaseAuth.instance.verifyPhoneNumber(
-        verificationCompleted: (PhoneAuthCredential phoneAuthCredential) {
-          print(phoneAuthCredential.toString());
-        },
-        verificationFailed: (FirebaseAuthException exception) {
-          print("exception: ${exception.toString()}");
-          // isError = true;
-        },
-        codeSent: (String verificationId, int? token) {
-          log('PhoneNumber: $phoneNumber');
-          // Set verificationId here
-          verfyId = verificationId;
-          isCodeSented = true;
-        },
-        codeAutoRetrievalTimeout: (String verificationId) {
-          // This callback will be called when auto-retrieval times out
-          print('codeAutoRetrievalTimeout: $verificationId');
-        },
-        phoneNumber: "${CountryCode}${phoneNumber}",
-      );
-      if (isCodeSented == true) {
-        return true;
+      print(CountryCode + phoneNumber);
+      isSentOtp = true;
+      rebuildUi();
+      final Map map = {"number": "${CountryCode}${phoneNumber}"};
+      var json1 = jsonEncode(map);
+      bool api = await ApiService.sendCode(body: json1);
+      if (api == true) {
+        isSentOtp = false;
+        OTPSent = false;
+        Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+                builder: (context) =>
+                    GetOtpView(verificationId: GlobalData.otp)));
       } else {
-        return false;
+        isSentOtp = false;
+        OTPSent = false;
+        isError = true;
+        rebuildUi();
+        await Future.delayed(const Duration(milliseconds: 2000));
+        isError = false;
+        rebuildUi();
       }
-    } on FirebaseAuthException catch (exception) {
-      print("FirebaseAuthException: ${exception.toString()}");
-      return false;
     } catch (e) {
-      print("Exception: ${e.toString()}");
-      return false;
+      print("Error : ${e.toString()}");
+      isSentOtp = false;
+      OTPSent = false;
+      isError = true;
+      rebuildUi();
+      await Future.delayed(const Duration(milliseconds: 2000));
+      isError = false;
+      rebuildUi();
     }
   }
-
-
 }

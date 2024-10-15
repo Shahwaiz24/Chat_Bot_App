@@ -21,6 +21,6 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(fontFamily: 'Chivo-Light'),
       debugShowCheckedModeBanner: false,
       home: const StartingView(),
-    );
+     );
   }
 }
