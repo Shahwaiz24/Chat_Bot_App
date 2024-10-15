@@ -147,11 +147,11 @@ class _GetOtpViewState extends State<GetOtpView> {
                                         enteredCode: OtpController.text);
 
                                     if (otpCheck == true) {
-                                      otpChecking = true;
+                                      otpChecking = false;
                                       viewmodel.stateRebuild();
                                       await Future.delayed(
                                           Duration(milliseconds: 500));
-                                           await LocalStorage.loginSave();
+                                      await LocalStorage.loginSave();
                                       Navigator.pushReplacement(
                                           context,
                                           PageTransition(
