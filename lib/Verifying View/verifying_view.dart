@@ -33,10 +33,9 @@ class _VerifyingViewState extends State<VerifyingView> {
               Navigator.pushReplacement(
                 context,
                 PageTransition(
-                  child: ChatBotView(),
-                  duration: Duration(seconds: 2),
-                  type: PageTransitionType.bottomToTop,
-                ),
+                type: PageTransitionType.fade,
+                child: const ChatBotView(),
+                duration: const Duration(milliseconds: 1000))
               );
             });
           }

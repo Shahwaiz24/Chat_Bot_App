@@ -8,7 +8,7 @@ class VerifyingViewmodel extends BaseViewModel {
       loading++;
       if (loading == 25) {
         loadingLevel = 'Phone Verified';
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(const Duration(seconds: 1));
         rebuildUi();
       } else if (loading == 50) {
         loadingLevel = 'Activation Started';

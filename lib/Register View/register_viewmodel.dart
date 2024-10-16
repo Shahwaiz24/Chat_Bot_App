@@ -7,6 +7,7 @@ import 'package:Atom/Services/api_service.dart';
 import 'package:Atom/Services/global_data.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:stacked/stacked.dart';
 
 class RegisterViewmodel extends BaseViewModel {
@@ -33,9 +34,12 @@ class RegisterViewmodel extends BaseViewModel {
         OTPSent = false;
         Navigator.pushReplacement(
             context,
-            MaterialPageRoute(
-                builder: (context) =>
-                    GetOtpView(verifiedOtp: GlobalData.otp)));
+            PageTransition(
+                type: PageTransitionType.fade,
+                child: GetOtpView(
+                  verifiedOtp: GlobalData.otp,
+                ),
+                duration: const Duration(milliseconds: 1000)));
       } else {
         isSentOtp = false;
         OTPSent = false;

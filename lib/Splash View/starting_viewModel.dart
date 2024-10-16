@@ -39,24 +39,26 @@ class StartingViewmodel extends BaseViewModel {
       bool checkLogin = await LocalStorage.checkLogin();
       if (checkLogin == true) {
         isloading = false;
+        rebuildUi();
         Navigator.pushReplacement(
             context,
             PageTransition(
-                type: PageTransitionType.bottomToTop,
-                child: ChatBotView(),
-                duration: Duration(seconds: 2)));
+                type: PageTransitionType.fade,
+                child: const ChatBotView(),
+                duration: const Duration(milliseconds: 1000)));
         PhoneNumberController.clear();
       } else {
         isloading = false;
+        rebuildUi();
 
         Navigator.push(
             context,
             PageTransition(
-                type: PageTransitionType.bottomToTop,
+                type: PageTransitionType.fade,
                 child: RegisterView(
                   CountryCodes: CountryCode,
                 ),
-                duration: Duration(seconds: 2)));
+                duration: const Duration(milliseconds: 1000)));
         PhoneNumberController.clear();
       }
     }

@@ -13,20 +13,22 @@ class GetOtpViewmodel extends BaseViewModel {
     rebuildUi();
   }
 
-  otpCheck({required String otp, required String enteredCode,required BuildContext context}) async {
+  otpCheck(
+      {required String otp,
+      required String enteredCode,
+      required BuildContext context}) async {
     otpChecking = true;
     isOtperror = false;
     rebuildUi();
     if (otp == enteredCode) {
       otpChecking = false;
- await LocalStorage.loginSave();
-  Navigator.pushReplacement(
-                                          context,
-                                          PageTransition(
-                                              child: VerifyingView(),
-                                              type: PageTransitionType
-                                                  .bottomToTop,
-                                              duration: Duration(seconds: 2)));
+      await LocalStorage.loginSave();
+      Navigator.pushReplacement(
+          context,
+          PageTransition(
+              type: PageTransitionType.fade,
+              child: const VerifyingView(),
+              duration: const Duration(milliseconds: 1000)));
     } else {
       otpChecking = false;
       isOtperror = true;

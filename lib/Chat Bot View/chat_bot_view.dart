@@ -63,8 +63,9 @@ class _ChatBotViewState extends State<ChatBotView> {
                         Navigator.pushReplacement(
                             context,
                             PageTransition(
-                                child: StartingView(),
-                                type: PageTransitionType.bottomToTop));
+                                type: PageTransitionType.fade,
+                                child: const StartingView(),
+                                duration: const Duration(milliseconds: 1000)));
                       },
                       child: Icon(
                         Icons.exit_to_app_outlined,
